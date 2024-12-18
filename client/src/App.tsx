@@ -1,10 +1,34 @@
 import "./App.css";
+import { store } from "./store/index";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import Login from "./pages/Login/Login";
+import ProfileSettings from "./pages/ProfileSettings/ProfileSettings";
+import Search from "./pages/Search/Search";
+import Profile from "./pages/Profile/Profile";
+import Register from "./pages/Register/Register";
+import Error404 from "./pages/Error404/Error404";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
+import Landing from "./pages/Landing/Landing";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
-    <div>
-      <h2>nir ya zain bathat</h2>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/get-pet/dashboard" element={<Dashboard />} />
+          <Route path="/get-pet/login" element={<Login />} />
+          <Route path="/get-pet//edit-profile" element={<ProfileSettings />} />
+          <Route path="/get-pet//search" element={<Search />} />
+          <Route path="/get-pet//profile/:username" element={<Profile />} />
+          <Route path="/get-pet//register" element={<Register />} />
+          <Route path="/get-pet/Coming-soon" element={<ComingSoon />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
