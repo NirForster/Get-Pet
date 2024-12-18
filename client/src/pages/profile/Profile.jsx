@@ -18,10 +18,7 @@ export default function Profile() {
       <Tabs className="">kjjkkj</Tabs>
       <Button>yoav</Button> */}
       <Avatar>
-        <AvatarImage
-          src="https://unsplash.com/photos/man-in-black-beanie-cap-kVg2DQTAK7c"
-          alt="@shadcn"
-        />
+        <AvatarImage src="/public/avataryoav.svg" alt="@shadcn" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Tabs className="">
