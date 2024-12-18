@@ -24,10 +24,17 @@ const usersController = {
       const token = await generateToken({ phoneNumber });
       console.log(token);
 
+      // Construct the response object with only the desired fields
+      const userResponse = {
+        name: newUser.name,
+        profilePicture: newUser.profilePicture,
+        role: newUser.role,
+      };
+
       res.status(201).json({
-        massage: "Sign up succesful!",
+        message: "Sign up successful!",
         token: token,
-        newUser,
+        user: userResponse,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
