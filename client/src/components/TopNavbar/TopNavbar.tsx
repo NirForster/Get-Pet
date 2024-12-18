@@ -12,10 +12,16 @@ const TopNavbar = () => {
 
   return (
     <div className="flex flex-row items-center justify-between absolute top-0 w-full left-0 p-[1em]">
-      <div className="flex flex-row gap-[0.3em]">
-        <img src={profileImg} alt="profile Image user" className="h-[1.5em]" />
-        <p className="font-contextFont">Hello {userName}</p>
-      </div>
+      <Link to="/get-pet/profile">
+        <div className="flex flex-row gap-[0.3em]">
+          <img
+            src={profileImg}
+            alt="profile Image user"
+            className="h-[1.5em]"
+          />
+          <p className="font-contextFont">Hello {userName}</p>
+        </div>
+      </Link>
       <Logo customLogoStyle="absolute h-[5em] top-[0.01em]" />
       <div className="flex flex-row gap-[0.3em]">
         <Link to="/get-pet/notifications" className={iconStyle}>

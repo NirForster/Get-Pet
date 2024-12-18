@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const seedDatabase = require("../dummyData/seed.js");
 dotenv.config();
 
-const connectDb = async (seed = false) => {
+const connectDb = async (seed = true) => {
   try {
     await mongoose.connect(process.env.URI);
     console.log("Connected to MongoDB successfully!");

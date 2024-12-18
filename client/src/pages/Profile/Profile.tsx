@@ -9,6 +9,7 @@ import {
 import { Avatar, AvatarImage } from "../../components/ui/avatar.tsx";
 import { useDispatch } from "react-redux";
 import { setProfilePicUser } from "@/store/slices/userSlice.ts";
+import axios from "axios";
 
 export default function Profile() {
   const dispatch = useDispatch();
