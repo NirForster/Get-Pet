@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import dogImage from "/dog-image-landing-page.svg";
 import { FiArrowUpRight } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
-import { IoLogoApple } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import Logo from "@/components/Logo/Logo";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
+import { duration } from "../../utils/helpers.js";
 
 const Landing = () => {
   return (
@@ -26,7 +24,9 @@ const Landing = () => {
         <div className="flex flex-row items-center w-full justify-center gap-[0.2em]">
           <div className="relative flex flex-row">
             <Link to="/get-pet/register">
-              <Button className="w-60 flex justify-center items-center">
+              <Button
+                className={`w-60 flex justify-center items-center hover:bg-chosenYellow ${duration}`}
+              >
                 Get Started
               </Button>
             </Link>
@@ -40,7 +40,7 @@ const Landing = () => {
           <div>
             <Link
               to="/get-pet/login"
-              className="text-chosenRed hover:text-black"
+              className={`text-chosenRed hover:text-black transition ${duration}`}
             >
               Sign in
             </Link>

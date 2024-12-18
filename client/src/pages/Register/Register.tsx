@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
+import { duration, btnStyle } from "../../utils/helpers.js";
 
 const Register = () => {
   return (
@@ -37,12 +38,12 @@ const Register = () => {
             <Link to="/get-pet/terms-and-use"> terms and conditions</Link>
           </label>
         </div>
-        <Button type="submit" className="w-full bg-chosenBlue">
+        <Button type="submit" className={`${btnStyle} ${duration}`}>
           Create account
         </Button>
         <div className="flex items-center justify-between w-full">
           <hr className="flex-grow" />
-          <p className="px-4 text-[0.8em] text-gray-400">Or register with</p>
+          <p className="px-4 text-[0.8em] text-gray-400">Or Login with</p>
           <hr className="flex-grow" />
         </div>
         <div className="flex w-full flex-row items-center gap-[0.5em]">
