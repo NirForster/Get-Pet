@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// const missingDoggieImage = require("../dummyData/missing-dog.svg");
 
 const PetSchema = new mongoose.Schema(
   {
@@ -12,7 +13,10 @@ const PetSchema = new mongoose.Schema(
 
     description: { type: String },
 
-    images: [String], // URLs to images
+    images: {
+      type: [String],
+      // default: [missingDoggieImage],
+    },
   },
   { timestamps: true }
 );
