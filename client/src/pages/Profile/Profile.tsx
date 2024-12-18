@@ -12,8 +12,6 @@ import {
   AvatarImage,
 } from "../../components/ui/avatar.tsx";
 export default function Profile() {
-  //   const [animalName, setAnimalName] = useState('rex');
-  //   const [count, setCount] = useState('0');
   return (
     <div>
       <Avatar>
