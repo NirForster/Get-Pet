@@ -9,7 +9,9 @@ const adoptionRequestRoutes = require("./routes/adoptionRequestRoutes");
 
 dotenv.config();
 
-require("./config/connectDb");
+const connectDb = require("./config/connectDb");
+
+connectDb();
 
 const app = express();
 app.use(cors());
