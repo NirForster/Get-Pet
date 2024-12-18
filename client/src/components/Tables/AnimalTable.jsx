@@ -1,27 +1,81 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../components/ui/tabs.tsx";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/ui/table";
 
+const dummyData = [
+  {
+    _id: "1",
+    name: "rex",
+    status: "is still waiting for you.",
+    imgUrl: dogSvg,
+    association: "pt",
+  },
+  {
+    _id: "2",
+    name: "baba",
+    status: "is still waiting for you.",
+    imgUrl: dogSvg,
+    association: "ta",
+  },
+  {
+    _id: "3",
+    name: "yuvalllll",
+    status: "is still waiting for you.",
+    imgUrl: dogSvg,
+    association: "je",
+  },
+];
+
+import dogSvg from "/dog-svgrepo-com.svg";
 export default function AnimalTable() {
-  const [animalName, setAnimalName] = useState("rex");
+  const [animals, setAnimals] = useState([]);
+
+  useEffect(() => {
+    // fetch data from backend
+    setAnimals(dummyData);
+  }, []);
 
   return (
     <TabsContent className="text-center" value="account">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">name</TableHead>
+            {/* <TableHead className="w-[100px]">name</TableHead> */}
+            <TableHead className="">name</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>image</TableHead>
+            <TableHead>association</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">{animalName}</TableCell>
-            <TableCell>{animalName} is still waiting for you.</TableCell>
-            <TableCell>
-              <img src={dogSvg}></img>
-            </TableCell>
-          </TableRow>
+          {animals.map((animal) => {
+            return (
+              <TableRow key={animal._id}>
+                <TableCell className="font-medium">{animal.name}</TableCell>
+                <TableCell>
+                  {animal.name} {animal.status}
+                </TableCell>
+                <TableCell>
+                  <img src={animal.imgUrl}></img>
+                </TableCell>
+                <TableCell>{animal.association}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TabsContent>
