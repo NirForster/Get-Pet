@@ -60,9 +60,9 @@ const comparePassword = async (plainPassword, hashedPassword) => {
 };
 
 // Generate a JWT token for a user
-const generateToken = (payload) => {
+const generateToken = async (payload) => {
   // payload typically includes user ID, role, etc.
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" }); // token valid for 7 days
+  return await jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" }); // token valid for 7 days
 };
 
 module.exports = {
