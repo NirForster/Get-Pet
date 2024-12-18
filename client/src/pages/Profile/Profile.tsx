@@ -1,8 +1,8 @@
-import React from 'react';
-import AnimalTable from '../../components/Tables/AnimalTable';
-import { useState } from 'react';
-import dogSvg from '/dog-svgrepo-com.svg';
-import { Button } from '../../components/ui/button.tsx';
+import React from "react";
+import AnimalTable from "../../components/Tables/AnimalTable.jsx";
+import { useState } from "react";
+import dogSvg from "/dog-svgrepo-com.svg";
+import { Button } from "../../components/ui/button.tsx";
 import {
   Table,
   TableBody,
@@ -11,25 +11,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../components/ui/table.tsx';
+} from "../../components/ui/table.tsx";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '../../components/ui/tabs.tsx';
+} from "../../components/ui/tabs.tsx";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '../../components/ui/avatar';
+} from "../../components/ui/avatar.tsx";
 export default function Profile() {
   //   const [animalName, setAnimalName] = useState('rex');
   //   const [count, setCount] = useState('0');
   return (
     <div>
       <Avatar>
-        <AvatarImage src="/avataryoav.svg" alt="@shadcn" />
+        <AvatarImage src="/avataryoav.svg" alt="" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Tabs className="w-72">

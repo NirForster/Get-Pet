@@ -1,0 +1,99 @@
+im doing a hackton with 2 friends they are working on the clien side and im working on the server side. were working with node.js, express, mongoDB, mongoose, faker, axios, React, TS, shadecn. my project is about connecting pets to people looking to adopt, and pet owners looking for a dog walker dog sitter. the ui idea is to make it look like tinder and let users swipe left or right to pets looking for adoption and potential dog sitters.
+
+User Schema (userModel.js):
+
+Fields:
+name: String (required)
+phoneNumber: String (required, unique, validated by Israeli phone regex)
+password: String (required)
+role: String (enum: ["adopter", "sitter"], required)
+profilePicture: String (default link provided)
+Timestamps enabled.
+Pet Schema (petModel.js):
+
+Fields:
+name: String (required)
+species: String (required)
+breed: String
+age: Number
+description: String
+images: Array of Strings (URLs)
+Timestamps enabled.
+AdoptionRequest Schema (adoptionRequestModel.js):
+
+Fields:
+adopterId: ObjectId referencing User (required)
+petId: ObjectId referencing Pet (required)
+status: String (enum: ["pending", "approved", "rejected"], default "pending")
+createdAt: Date (default now)
+
+Thought about user saved pets and sitters for a few seconds
+If you want to track which pets a user has “liked” (swiped right on) and which sitters they have saved, you can store references to those items directly in the User schema. This way, each user will have arrays listing the IDs of pets they’ve liked and sitters they’ve saved. Here’s one approach:
+
+Updated User Schema
+js
+Copy code
+const mongoose = require("mongoose");
+
+const phoneRegExp = /^(?:\+972|0)(?:[23489]\d{7}|5\d{8})$/;
+
+const validatePhoneNumber = function (phoneNumber) {
+return phoneRegExp.test(phoneNumber);
+};
+
+const UserSchema = new mongoose.Schema(
+{
+name: { type: String, required: true },
+
+    phoneNumber: {
+      type: String,
+      unique: true,
+      required: [true, "Phone Number Is Required"],
+      validate: {
+        validator: validatePhoneNumber,
+        message: "Please fill a valid phone number.",
+      },
+    },
+
+    password: { type: String, required: true },
+
+    role: {
+      type: String,
+      enum: ["adopter", "sitter"],
+      required: true,
+    },
+
+    profilePicture: {
+      type: String,
+      default:
+        "https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg",
+    },
+
+    // Array of Pets the user has liked
+    likedPets: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Pet"
+    }],
+
+    // Array of Sitters the user has saved (if needed)
+    savedSitters: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User" // referencing other users with role = "sitter"
+    }],
+
+},
+
+{ timestamps: true }
+);
+
+module.exports = mongoose.model("User", UserSchema);
+How This Works
+likedPets:
+When an adopter swipes right on a pet, you can push that pet’s \_id into likedPets. Later, the user can see all their liked pets by populating this field in queries.
+
+savedSitters:
+If a user wants to save specific sitters they like, you can add the sitter’s \_id to the savedSitters array. This allows the user to keep a personalized list of sitters they’re interested in.
+
+todo:
+validate login info - dont let same user sign in twice
+validate role is adopter or sitter

@@ -21,11 +21,11 @@ const Landing = () => {
             Find a friend, Love without end.
           </p>
         </div>
-        <div className="flex flex-row items-center w-full justify-center gap-[0.2em]">
+        <div className="flex flex-row items-center w-full justify-center gap-[0.2em] p-[1em]">
           <div className="relative flex flex-row">
             <Link to="/get-pet/register">
               <Button
-                className={`w-60 flex justify-center items-center hover:bg-chosenYellow ${duration}`}
+                className={`w-[10em] flex justify-center items-center hover:bg-chosenYellow ${duration}`}
               >
                 Get Started
               </Button>
