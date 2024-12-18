@@ -29,8 +29,10 @@ const Register: React.FC = () => {
         data
       );
       if (res) {
-        console.log("User registered successfully:", res.data);
-        Cookies.set("token", res.data.token, { expire: 7 });
+        setTimeout(() => {
+          console.log("User registered successfully:", res.data);
+          Cookies.set("token", res.data.token, { expire: 7 });
+        }, 1500);
         setRegister(true);
       }
     } catch (error: any) {
