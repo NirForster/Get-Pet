@@ -1,7 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
+
 export default function AnimalTable() {
-  const [animalName, setAnimalName] = useState('rex');
+  const [animalName, setAnimalName] = useState("rex");
 
   return (
     <TabsContent className="text-center" value="account">

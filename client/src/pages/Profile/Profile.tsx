@@ -6,13 +6,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs.tsx";
-
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/avatar.tsx";
-
 export default function Profile() {
   //   const [animalName, setAnimalName] = useState('rex');
   //   const [count, setCount] = useState('0');
@@ -27,7 +25,6 @@ export default function Profile() {
           <TabsTrigger value="account">Animals</TabsTrigger>
           <TabsTrigger value="password">siters</TabsTrigger>
         </TabsList>
-        <AnimalName />
         <AnimalTable></AnimalTable>
         {/* <TabsContent className="text-center" value="account">
           <Table>
