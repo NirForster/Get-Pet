@@ -1,10 +1,14 @@
+import React from "react";
 import "./App.css";
-
+import Profile from "./pages/profile/Profile"; 
 function App() {
   return (
-    <div>
-      <h2>nir ya zain bathat</h2>
-    </div>
+      <div>
+        <div>
+            </div>
+            <Profile/>
+      </div>
+  
   );
 }
 
