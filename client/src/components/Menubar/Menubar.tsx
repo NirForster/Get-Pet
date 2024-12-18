@@ -30,13 +30,6 @@ const Menubar = () => {
           <PiChatsCircle style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
-      <Link to="/get-pet/settings">
-        <div
-          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
-        >
-          <IoSettingsOutline style={{ fontSize: "1.5em" }} />
-        </div>
-      </Link>
       <Link to="/get-pet/profile">
         <div
           className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}

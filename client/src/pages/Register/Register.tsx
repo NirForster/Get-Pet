@@ -5,17 +5,24 @@ import { Link } from "react-router-dom";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
 import axios from "axios";
+import Cookies from "js-cookie";
 import {
   duration,
   btnStyle,
   inputPlaceholderStyle,
 } from "../../utils/helpers.js";
 import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const Register = () => {
+const Register: React.FC = () => {
   const [register, setRegister] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const registerUser = async (data) => {
+  const registerUser = async (data: {
+    name: string;
+    phoneNumber: string;
+    password: string;
+  }) => {
     try {
       const res = await axios.post(
         "http://localhost:3000/users/register",
@@ -23,9 +30,10 @@ const Register = () => {
       );
       if (res) {
         console.log("User registered successfully:", res.data);
+        Cookies.set("token", res.data.token, { expire: 7 });
         setRegister(true);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(
         "Error during user registration:",
         error.response || error.message
@@ -33,12 +41,12 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const name = formData.get("name");
-    const phoneNumber = formData.get("phoneNumber"); // Changed key to match consistency
-    const password = formData.get("password");
+    const formData = new FormData(e.target as HTMLFormElement);
+    const name = formData.get("name") as string;
+    const phoneNumber = formData.get("phoneNumber") as string;
+    const password = formData.get("password") as string;
     const terms = formData.get("terms");
 
     if (!name || !phoneNumber || !password) {
@@ -64,7 +72,7 @@ const Register = () => {
           : "hidden"
         }
       >
-        <p>Successfully register!</p>
+        <p>Successfully registered!</p>
       </div>
       <form
         className="flex flex-col items-center gap-[0.5em] w-full"
@@ -73,7 +81,7 @@ const Register = () => {
         <Input
           className={`${inputPlaceholderStyle}`}
           placeholder="Phone number"
-          name="phoneNumber" // Updated name to match data key
+          name="phoneNumber"
           id="phone-number"
           required
         />
@@ -84,14 +92,25 @@ const Register = () => {
           className={`${inputPlaceholderStyle}`}
           required
         />
-        <Input
-          placeholder="Password"
-          name="password"
-          id="password"
-          type="password"
-          className={`${inputPlaceholderStyle}`}
-          required
-        />
+        <div className="relative w-full">
+          <Input
+            placeholder="Password"
+            name="password"
+            id="password"
+            type={showPassword ? "text" : "password"}
+            className={`${inputPlaceholderStyle}`}
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2"
+          >
+            {showPassword ?
+              <AiOutlineEyeInvisible size={20} />
+            : <AiOutlineEye size={20} />}
+          </button>
+        </div>
         <div className="flex flex-row flex-wrap items-center gap-[0.2em]">
           <Checkbox name="terms" id="terms" required />
           <label htmlFor="terms" className="text-[0.8em]">
