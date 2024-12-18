@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/index";
-
 import Logo from "./components/Logo/Logo";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Landing from "./pages/Landing/Landing";
@@ -45,7 +44,7 @@ function App() {
                 </>
               }
             />
-            <Route path="/get-pet/profile/:username" element={<Profile />} />
+            <Route path="/get-pet/profile" element={<Profile />} />
             <Route
               path="/get-pet/edit-profile"
               element={

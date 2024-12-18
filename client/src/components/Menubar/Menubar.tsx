@@ -2,6 +2,8 @@ import { FaDog } from "react-icons/fa";
 import { PiChatsCircle } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
+
 import { pointer } from "../../utils/helpers.js";
 import { Link } from "react-router-dom";
 
@@ -34,6 +36,13 @@ const Menubar = () => {
           className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
         >
           <IoSettingsOutline style={{ fontSize: "1.5em" }} />
+        </div>
+      </Link>
+      <Link to="/get-pet/profile">
+        <div
+          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
+        >
+          <FaRegUser style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
     </div>
