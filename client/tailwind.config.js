@@ -4,13 +4,23 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        titleFont: ["dynamo-reg", "sans-serif"],
+        contextFont: ["cedora-reg", "sans-serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        chosenBlue: "#4b96d5",
+        chosenYellow: "#fea910",
+        chosenRed: "#d82221",
+        chosenBlack: "#302f2f",
+        chosenWhite: "#fff6e4",
         background: "hsl(var(--background))",
+        backgroundChosenRed: "#d82221",
         foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
