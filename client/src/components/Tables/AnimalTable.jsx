@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../components/ui/tabs.tsx";
+import { TabsContent } from "../../components/ui/tabs.tsx";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -55,10 +49,10 @@ export default function AnimalTable() {
         <TableHeader>
           <TableRow>
             {/* <TableHead className="w-[100px]">name</TableHead> */}
-            <TableHead className="">name</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>image</TableHead>
-            <TableHead>association</TableHead>
+            <TableHead>Image</TableHead>
+            <TableHead>Association</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

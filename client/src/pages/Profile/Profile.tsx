@@ -1,17 +1,12 @@
 import AnimalTable from "../../components/Tables/AnimalTable.jsx";
 import { useEffect } from "react";
-
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs.tsx";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar.tsx";
+import { Avatar, AvatarImage } from "../../components/ui/avatar.tsx";
 import { useDispatch } from "react-redux";
 import { setProfilePicUser } from "@/store/slices/userSlice.ts";
 
@@ -39,7 +34,7 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-[1em] absolute top-[5em] left-0 p-[1em] text-black">
-      <div className="flex flex-row items-center w-full justify-center  rounded-[0.5em] p-[1em] h-[150px] gap-[0.5em]">
+      <div className="flex flex-row items-center w-full justify-center bg-gray-200 rounded-[0.5em] p-[1em] h-[150px] gap-[0.5em]">
         <div>
           <Avatar>
             <AvatarImage
