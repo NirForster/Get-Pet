@@ -22,18 +22,21 @@ const dummyData = [
     name: 'rex',
     status: 'is still waiting for you.',
     imgUrl: dogSvg,
+    association: 'pt',
   },
   {
     _id: '2',
     name: 'baba',
     status: 'is still waiting for you.',
     imgUrl: dogSvg,
+    association: 'ta',
   },
   {
     _id: '3',
-    name: 'yuval',
+    name: 'yuvalllll',
     status: 'is still waiting for you.',
     imgUrl: dogSvg,
+    association: 'je',
   },
 ];
 
@@ -51,9 +54,11 @@ export default function AnimalTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">name</TableHead>
+            {/* <TableHead className="w-[100px]">name</TableHead> */}
+            <TableHead className="">name</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>image</TableHead>
+            <TableHead>association</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -67,6 +72,7 @@ export default function AnimalTable() {
                 <TableCell>
                   <img src={animal.imgUrl}></img>
                 </TableCell>
+                <TableCell>{animal.association}</TableCell>
               </TableRow>
             );
           })}

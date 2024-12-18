@@ -1,8 +1,9 @@
 import { FcGoogle } from "react-icons/fc";
+import { duration, btnStyle } from "../../utils/helpers.js";
 
 const GoogleBtn = () => {
   return (
-    <div className="bg-gray-300 p-[0.6em] rounded-[0.5em] hover:bg-black cursor-pointer w-full text-center flex flex-row items-center justify-center">
+    <div className={`${btnStyle} ${duration}`}>
       <FcGoogle />
     </div>
   );
