@@ -1,5 +1,3 @@
-import AnimalTable from "../../components/Tables/AnimalTable.jsx";
-
 import {
   Tabs,
   TabsContent,
@@ -23,7 +21,6 @@ export default function Profile() {
           <TabsTrigger value="account">Animals</TabsTrigger>
           <TabsTrigger value="password">siters</TabsTrigger>
         </TabsList>
-        <AnimalTable></AnimalTable>
         {/* <TabsContent className="text-center" value="account">
           <Table>
             <TableHeader>

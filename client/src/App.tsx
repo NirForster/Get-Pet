@@ -35,17 +35,6 @@ function App() {
             <Route path="/get-pet/login" element={<Login />} />
             <Route path="/get-pet/register" element={<Register />} />
             <Route
-              path="/get-pet/settings"
-              element={
-                <>
-                  <TopNavbar />
-                  <Settings />
-                  <Menubar />
-                </>
-              }
-            />
-            <Route path="/get-pet/profile" element={<Profile />} />
-            <Route
               path="/get-pet/edit-profile"
               element={
                 <>
@@ -68,6 +57,16 @@ function App() {
               <>
                 <TopNavbar />
                 <Messages />
+                <Menubar />
+              </>
+            }
+          />
+          <Route
+            path="/get-pet/profile"
+            element={
+              <>
+                <TopNavbar />
+                <Profile />
                 <Menubar />
               </>
             }
