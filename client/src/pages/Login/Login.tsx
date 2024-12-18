@@ -8,6 +8,8 @@ import AppleBtn from "@/components/AppleBtn/AppleBtn";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { setGlobalCookie } from "../../store/slices/userSlice";
 
 interface LoginData {
   phoneNumber: string;
@@ -15,6 +17,9 @@ interface LoginData {
 }
 
 const Login: React.FC = () => {
+  const dispatch = useDispatch();
+  // dispatch(setProfilePicUser(userData?.user?.profilePic));
+
   const [login, setLogin] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -27,12 +32,9 @@ const Login: React.FC = () => {
       if (res) {
         console.log("User logged in successfully:", res.data);
         setTimeout(() => {
-          const cookie = Cookies.get("token");
-
-          if (!cookie) {
-            Cookies.set("token", res.data.token, { expires: 7 });
-          }
-        }, 2000);
+          Cookies.set("token", res.data.token, { expires: 7 });
+          dispatch(setGlobalCookie(res.data.token));
+        }, 1000);
         setLogin(true);
       }
     } catch (error: any) {

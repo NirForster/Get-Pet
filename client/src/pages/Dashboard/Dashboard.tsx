@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoHeartCircleSharp } from "react-icons/io5";
@@ -15,9 +16,9 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPets();
-  }, []);
+  // useEffect(() => {
+  //   fetchPets();
+  // }, []);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -33,10 +34,10 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-row flex-wrap w-full justify-between">
         <button>
-          <IoMdCloseCircle style={{ fontSize: "4em", color: "red" }} />
+          <IoMdCloseCircle className="text-[4em] text-chosenRed hover:text-black" />
         </button>
         <button>
-          <IoHeartCircleSharp style={{ fontSize: "4em", color: "green" }} />
+          <IoHeartCircleSharp className="text-[4em] text-green-500 hover:text-black" />
         </button>
       </div>
     </div>
