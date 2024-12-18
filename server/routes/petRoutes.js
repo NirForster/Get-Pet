@@ -4,7 +4,6 @@ const {
   addPet,
   getAllPets,
   getPetById,
-  updatePet,
   deletePet,
 } = require("../controllers/petsController.js");
 const verifyToken = require("../middlewares/verifyToken.js");
