@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
     name: { type: String, required: true },
 
     phoneNumber: {
-      type: String,
+      type: Number,
       unique: true,
       required: [true, "Phone Number Is Required"],
       validate: {
