@@ -2,6 +2,10 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 
+const userRoutes = require("./routes/userRoutes");
+const petRoutes = require("./routes/petRoutes");
+const adoptionRequestRoutes = require("./routes/adoptionRequestRoutes");
+
 dotenv.config();
 
 require("./config/connectDb");
@@ -16,6 +20,10 @@ app.get("/", (req, res) => {
     data: "Welcome to the get-pet server api",
   });
 });
+
+app.use("/users", userRoutes);
+app.use("/pets", petRoutes);
+app.use("/adoptionRequests", adoptionRequestRoutes);
 
 const PORT = process.env.PORT || 3000;
 
