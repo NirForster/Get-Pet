@@ -1,163 +1,100 @@
 const mongoose = require("mongoose");
-const { faker } = require("@faker-js/faker"); // For faker@5.x. If using @faker-js/faker, import accordingly.
-const Pet = require("../models/petModel.js");
-const dotenv = require("dotenv");
-const { options } = require("../routes/userRoutes.js");
+const { faker } = require("@faker-js/faker");
 
-dotenv.config();
-
-// Arrays of possible values
-const speciesList = ["cat", "dog", "bird", "rabbit", "hamster"];
-const adoptionCenters = [
-  "Tnu LaChayot Lichyot",
-  "Tza'ar Ba'alei Chayim",
-  "SOS Chayot",
-  "Chavat HaChofesh",
-  "Chaver Al Arba",
-];
-
-// Breed arrays per species
-const catBreeds = [
-  "Tabby",
-  "Siamese",
-  "Persian",
-  "Maine Coon",
-  "British Shorthair",
-  "Ragdoll",
-  "Bengal",
-  "Sphynx",
-  "Scottish Fold",
-];
-const dogBreeds = [
-  "Labrador",
-  "German Shepherd",
-  "Golden Retriever",
-  "Bulldog",
-  "Poodle",
-  "Beagle",
-  "French Bulldog",
-  "Husky",
-  "Boxer",
-];
-const birdBreeds = [
-  "Parrot",
-  "Budgerigar",
-  "Cockatiel",
-  "Canary",
-  "Finch",
-  "African Grey",
-  "Lovebird",
-  "Macaw",
-  "Cockatoo",
-];
-const rabbitBreeds = [
-  "Netherland Dwarf",
-  "Holland Lop",
-  "Mini Lop",
-  "Lionhead",
-  "Flemish Giant",
-  "Rex",
-  "Angora",
-  "Chinchilla",
-  "Polish",
-];
-const hamsterBreeds = [
-  "Syrian",
-  "Dwarf Campbell",
-  "Dwarf Winter White",
-  "Chinese",
-  "Roborovski",
-  "Russian Dwarf",
-  "Teddy Bear",
-  "Golden",
-  "Black Bear",
-];
-
-// Helper function to pick a random element from an array
-const randomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-// Helper function to generate a LoremFlickr URL
-const urlLoremFlickr = ({
-  width = 250,
-  height = 350,
-  category = "animals",
-}) => {
-  const baseUrl = "https://loremflickr.com";
-  return `${baseUrl}/${width}/${height}/${category}`;
-};
-
-const generatePetData = (species) => {
-  let breedOptions;
-  let category;
-
-  // Match species to breeds and image category
-  switch (species) {
-    case "cat":
-      breedOptions = catBreeds;
-      category = "cat";
-      break;
-    case "dog":
-      breedOptions = dogBreeds;
-      category = "dog";
-      break;
-    case "bird":
-      breedOptions = birdBreeds;
-      category = "bird";
-      break;
-    case "rabbit":
-      breedOptions = rabbitBreeds;
-      category = "rabbit";
-      break;
-    case "hamster":
-      breedOptions = hamsterBreeds;
-      category = "hamster";
-      break;
-    default:
-      breedOptions = [];
-      category = "animals"; // Fallback category
-  }
-
-  return {
-    name: faker.animal.petName(), // Generates a pet name
-    species,
-    breed: randomElement(breedOptions),
-    age: Math.floor(Math.random() * 15) + 1, // Age between 1 and 15
-    description: faker.lorem.sentence(),
-    adoptionCenter: randomElement(adoptionCenters),
-    images: [urlLoremFlickr({ category })], // Generates a species-specific image URL
-  };
-};
+const AdoptionRequest = require("../models/adoptionRequestModel");
+const Pet = require("../models/petModel");
+const User = require("../models/userModel");
 
 const seedDatabase = async () => {
   try {
-    await mongoose.connect(process.env.URI);
-    console.log("Connected to MongoDB");
+    console.log("Checking and seeding database...");
 
-    // Clear existing pets
-    await Pet.deleteMany({});
-    console.log("Cleared existing pets");
+    // Check and seed Users
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      const users = [];
+      const phoneNumbers = new Set(); // To ensure uniqueness
 
-    const petsToInsert = [];
-
-    // For each species, insert 50 pets
-    for (const species of speciesList) {
-      for (let i = 0; i < 50; i++) {
-        const petData = generatePetData(species);
-        petsToInsert.push(petData);
+      while (phoneNumbers.size < 50) {
+        // Generate a valid phone number starting with 05 and having 10 digits
+        const randomPhoneNumber = `05${Math.floor(
+          10000000 + Math.random() * 90000000
+        )}`; // Range: 0500000000 - 0599999999
+        phoneNumbers.add(randomPhoneNumber); // Add to the set if unique
       }
+
+      // Convert unique phone numbers to user objects
+      for (const phoneNumber of phoneNumbers) {
+        users.push({
+          name: faker.person.fullName(),
+          phoneNumber: phoneNumber,
+          password: faker.internet.password(),
+          role: faker.helpers.arrayElement(["adopter", "sitter"]),
+          likedPets: [],
+          savedSitters: [],
+        });
+      }
+
+      await User.insertMany(users);
+      console.log("Users collection seeded.");
+    } else {
+      console.log("Users collection already populated.");
     }
 
-    await Pet.insertMany(petsToInsert);
-    console.log(
-      `Inserted ${speciesList.length * 50} pets (${speciesList.join(", ")})`
-    );
+    // Check and seed Pets
+    const petCount = await Pet.countDocuments();
+    if (petCount === 0) {
+      const pets = [];
+      for (let i = 0; i < 50; i++) {
+        pets.push({
+          name: faker.person.firstName(),
+          species: faker.helpers.arrayElement(["dog", "cat", "rabbit"]),
+          breed: faker.word.noun(),
+          age: faker.number.int({ min: 1, max: 15 }),
+          description: faker.lorem.sentence(),
+          adoptionCenter: faker.helpers.arrayElement([
+            "Tnu LaChayot Lichyot",
+            "Tza'ar Ba'alei Chayim",
+            "SOS Chayot",
+            "Chavat HaChofesh",
+            "Chaver Al Arba",
+          ]),
+          images: [faker.image.url({ category: "cats" })], // Updated method
+        });
+      }
+      await Pet.insertMany(pets);
+      console.log("Pets collection seeded.");
+    } else {
+      console.log("Pets collection already populated.");
+    }
 
-    mongoose.connection.close();
-    console.log("Connection closed");
+    // Check and seed Adoption Requests
+    const adoptionRequestCount = await AdoptionRequest.countDocuments();
+    if (adoptionRequestCount === 0) {
+      const insertedUsers = await User.find();
+      const insertedPets = await Pet.find();
+      const adoptionRequests = [];
+      for (let i = 0; i < 50; i++) {
+        adoptionRequests.push({
+          adopterId: faker.helpers.arrayElement(insertedUsers)._id,
+          petId: faker.helpers.arrayElement(insertedPets)._id,
+          status: faker.helpers.arrayElement([
+            "pending",
+            "approved",
+            "rejected",
+          ]),
+        });
+      }
+      await AdoptionRequest.insertMany(adoptionRequests);
+      console.log("AdoptionRequests collection seeded.");
+    } else {
+      console.log("AdoptionRequests collection already populated.");
+    }
+
+    console.log("Database seed operation complete!");
   } catch (error) {
-    console.error("Error seeding database:", error);
-    mongoose.connection.close();
+    console.error("Error during database seeding:", error);
   }
 };
 
-seedDatabase();
+module.exports = seedDatabase;
