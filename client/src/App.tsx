@@ -44,7 +44,11 @@ function App() {
                 </>
               }
             />
-            <Route path="/get-pet/profile" element={<Profile />} />
+            <Route path="/get-pet/profile" element={<>
+              <TopNavbar />
+              <Profile />
+              <Menubar />
+            </>} />
             <Route
               path="/get-pet/edit-profile"
               element={
