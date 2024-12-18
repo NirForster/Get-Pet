@@ -26,6 +26,7 @@ const seedDatabase = async () => {
       // Convert unique phone numbers to user objects
       for (const phoneNumber of phoneNumbers) {
         users.push({
+          profilePicture: faker.image.avatar(),
           name: faker.person.fullName(),
           phoneNumber: phoneNumber,
           password: faker.internet.password(),

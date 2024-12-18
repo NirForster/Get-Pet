@@ -16,9 +16,9 @@ const Dashboard = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchPets();
-  // }, []);
+  useEffect(() => {
+    fetchPets();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -29,10 +29,14 @@ const Dashboard = () => {
           <span> Adopt.</span>
         </h1>
       </div>
-      <div className="bg-gray-500 rounded-[1em] h-[350px] w-[250px]">
-        <img src="" alt="" className="w-full" />
+      <div className="rounded-[1em] h-[350px] w-[250px]">
+        <img
+          src="/dog-placeholder.svg"
+          alt=""
+          className="w-full rounded-[1em]"
+        />
       </div>
-      <div className="flex flex-row flex-wrap w-full justify-between">
+      <div className="flex flex-row flex-wrap w-full justify-center gap-[1em]">
         <button>
           <IoMdCloseCircle className="text-[4em] text-chosenRed hover:text-black" />
         </button>
