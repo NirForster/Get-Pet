@@ -1,23 +1,20 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FaBell } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
-import { useSelector } from "react-redux";
 
 const iconStyle = "p-[0.5em]";
 
 const TopNavbar = () => {
-  const setDefaultImg = useSelector((state) => state.user.profileImg);
+  const profileImg = useSelector((state) => state.user.profileImg);
+  const userName = useSelector((state) => state.user.name);
 
   return (
     <div className="flex flex-row items-center justify-between absolute top-0 w-full left-0 p-[1em]">
       <div className="flex flex-row gap-[0.3em]">
-        <img
-          src="/default-user-profile.svg"
-          alt="profile Image user"
-          className="h-[1.5em]"
-        />
-        <p className="font-contextFont">Hi , Lay</p>
+        <img src={profileImg} alt="profile Image user" className="h-[1.5em]" />
+        <p className="font-contextFont">Hello {userName}</p>
       </div>
       <Logo customLogoStyle="absolute h-[5em] top-[0.01em]" />
       <div className="flex flex-row gap-[0.3em]">
