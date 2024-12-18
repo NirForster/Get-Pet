@@ -56,6 +56,20 @@ const usersController = {
     }
   },
 
+  // Get user by PhoneNumber
+  getUserByPhoneNumber: async (req, res) => {
+    try {
+      const { phoneNumber } = req.params;
+      console.log(phoneNumber);
+
+      const user = await User.findOne({ phoneNumber: phoneNumber });
+      if (!user) return res.status(404).json({ message: "User not found" });
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
   // Delete user by ID
   deleteUser: async (req, res) => {
     try {

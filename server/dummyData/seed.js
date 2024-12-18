@@ -1,60 +1,163 @@
 const mongoose = require("mongoose");
-const { faker } = require("@faker-js/faker");
+const { faker } = require("@faker-js/faker"); // For faker@5.x. If using @faker-js/faker, import accordingly.
+const Pet = require("../models/petModel.js");
 const dotenv = require("dotenv");
+const { options } = require("../routes/userRoutes.js");
 
 dotenv.config();
 
-// Define the Pet Schema
-const petSchema = new mongoose.Schema({
-  name: String,
-  type: String, // e.g., Dog, Cat, Bird
-  age: Number,
-  breed: String,
-  owner: {
-    name: String,
-    phone: String,
-    email: String,
-  },
-});
+// Arrays of possible values
+const speciesList = ["cat", "dog", "bird", "rabbit", "hamster"];
+const adoptionCenters = [
+  "Tnu LaChayot Lichyot",
+  "Tza'ar Ba'alei Chayim",
+  "SOS Chayot",
+  "Chavat HaChofesh",
+  "Chaver Al Arba",
+];
 
-const Pet = mongoose.model("Pet", petSchema);
+// Breed arrays per species
+const catBreeds = [
+  "Tabby",
+  "Siamese",
+  "Persian",
+  "Maine Coon",
+  "British Shorthair",
+  "Ragdoll",
+  "Bengal",
+  "Sphynx",
+  "Scottish Fold",
+];
+const dogBreeds = [
+  "Labrador",
+  "German Shepherd",
+  "Golden Retriever",
+  "Bulldog",
+  "Poodle",
+  "Beagle",
+  "French Bulldog",
+  "Husky",
+  "Boxer",
+];
+const birdBreeds = [
+  "Parrot",
+  "Budgerigar",
+  "Cockatiel",
+  "Canary",
+  "Finch",
+  "African Grey",
+  "Lovebird",
+  "Macaw",
+  "Cockatoo",
+];
+const rabbitBreeds = [
+  "Netherland Dwarf",
+  "Holland Lop",
+  "Mini Lop",
+  "Lionhead",
+  "Flemish Giant",
+  "Rex",
+  "Angora",
+  "Chinchilla",
+  "Polish",
+];
+const hamsterBreeds = [
+  "Syrian",
+  "Dwarf Campbell",
+  "Dwarf Winter White",
+  "Chinese",
+  "Roborovski",
+  "Russian Dwarf",
+  "Teddy Bear",
+  "Golden",
+  "Black Bear",
+];
 
-async function seedDatabase() {
+// Helper function to pick a random element from an array
+const randomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+// Helper function to generate a LoremFlickr URL
+const urlLoremFlickr = ({
+  width = 250,
+  height = 350,
+  category = "animals",
+}) => {
+  const baseUrl = "https://loremflickr.com";
+  return `${baseUrl}/${width}/${height}/${category}`;
+};
+
+const generatePetData = (species) => {
+  let breedOptions;
+  let category;
+
+  // Match species to breeds and image category
+  switch (species) {
+    case "cat":
+      breedOptions = catBreeds;
+      category = "cat";
+      break;
+    case "dog":
+      breedOptions = dogBreeds;
+      category = "dog";
+      break;
+    case "bird":
+      breedOptions = birdBreeds;
+      category = "bird";
+      break;
+    case "rabbit":
+      breedOptions = rabbitBreeds;
+      category = "rabbit";
+      break;
+    case "hamster":
+      breedOptions = hamsterBreeds;
+      category = "hamster";
+      break;
+    default:
+      breedOptions = [];
+      category = "animals"; // Fallback category
+  }
+
+  return {
+    name: faker.animal.petName(), // Generates a pet name
+    species,
+    breed: randomElement(breedOptions),
+    age: Math.floor(Math.random() * 15) + 1, // Age between 1 and 15
+    description: faker.lorem.sentence(),
+    adoptionCenter: randomElement(adoptionCenters),
+    images: [urlLoremFlickr({ category })], // Generates a species-specific image URL
+  };
+};
+
+const seedDatabase = async () => {
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.URI);
     console.log("Connected to MongoDB");
 
-    // Clear the database
+    // Clear existing pets
     await Pet.deleteMany({});
-    console.log("Existing data cleared");
+    console.log("Cleared existing pets");
 
-    // Generate 20 fake pets
-    const pets = [];
-    for (let i = 0; i < 20; i++) {
-      pets.push({
-        name: faker.animal.dog(),
-        type: faker.helpers.arrayElement(["Dog", "Cat", "Bird", "Rabbit"]),
-        age: faker.number.int({ min: 1, max: 15 }),
-        breed: faker.animal.dog(), // Replace for other animal breeds if needed
-        owner: {
-          name: faker.person.fullName(),
-          phone: faker.phone.number(),
-          email: faker.internet.email(),
-        },
-      });
+    const petsToInsert = [];
+
+    // For each species, insert 50 pets
+    for (const species of speciesList) {
+      for (let i = 0; i < 50; i++) {
+        const petData = generatePetData(species);
+        petsToInsert.push(petData);
+      }
     }
 
-    // Insert into MongoDB
-    await Pet.insertMany(pets);
-    console.log("20 pets successfully seeded into the database");
+    await Pet.insertMany(petsToInsert);
+    console.log(
+      `Inserted ${speciesList.length * 50} pets (${speciesList.join(", ")})`
+    );
 
-    // Close the connection
     mongoose.connection.close();
-    console.log("Database connection closed");
+    console.log("Connection closed");
   } catch (error) {
     console.error("Error seeding database:", error);
+    mongoose.connection.close();
   }
-}
+};
 
 seedDatabase();

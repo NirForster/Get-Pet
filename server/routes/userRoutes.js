@@ -11,6 +11,7 @@ const {
   getSavedUsers,
   likePet,
   saveSitters,
+  getUserByPhoneNumber,
 } = require("../controllers/usersControllers.js");
 
 const router = express.Router();
@@ -26,6 +27,9 @@ router.get("/all", getAllUsers);
 
 // get user by id
 router.get("/:id", getUserById);
+
+// get User By Phone Number
+router.get("/phone/:phoneNumber", getUserByPhoneNumber);
 
 // delete user by id
 router.delete("/:id", deleteUser);

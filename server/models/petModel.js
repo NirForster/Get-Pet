@@ -13,6 +13,17 @@ const PetSchema = new mongoose.Schema(
 
     description: { type: String },
 
+    adoptionCenter: {
+      type: String,
+      enum: [
+        "Tnu LaChayot Lichyot",
+        "Tza'ar Ba'alei Chayim",
+        "SOS Chayot",
+        "Chavat HaChofesh",
+        "Chaver Al Arba",
+      ],
+    },
+
     images: {
       type: [String],
       // default: [missingDoggieImage],
@@ -21,4 +32,5 @@ const PetSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Pet", PetSchema);
+const Pet = mongoose.model("Pet", PetSchema);
+module.exports = Pet;
