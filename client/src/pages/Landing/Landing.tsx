@@ -1,17 +1,15 @@
 import { Button } from "@/components/ui/button";
 import dogImage from "/dog-image-landing-page.svg";
-import logo from "/logo-get-pet.svg";
 import { FiArrowUpRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoApple } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Logo from "@/components/Logo/Logo";
 
 const Landing = () => {
   return (
     <div className="flex flex-col items-center w-full justify-center font-contextFont text-center  gap-[0.5em]">
-      <div>
-        <img src={logo} alt="" />
-      </div>
+      <Logo />
       <div className="relative">
         <img src={dogImage} alt="Dog on landing page" />
         <div>
@@ -26,9 +24,11 @@ const Landing = () => {
         </div>
         <div className="flex flex-row items-center w-full justify-center gap-[0.2em]">
           <div className="relative flex flex-row">
-            <Button className="w-60 flex justify-center items-center">
-              Get Started
-            </Button>
+            <Link to="/get-pet/register">
+              <Button className="w-60 flex justify-center items-center">
+                Get Started
+              </Button>
+            </Link>
             <FiArrowUpRight className="absolute top-[0.1em] right-[0em] text-white" />
           </div>
           <div className="bg-gray-300 p-[0.6em] rounded-[0.5em] hover:bg-black cursor-pointer">
