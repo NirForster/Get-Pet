@@ -82,6 +82,16 @@ function App() {
             }
           />
           <Route
+            path="/get-pet/settings"
+            element={
+              <>
+                <TopNavbar />
+                <Settings />
+                <Menubar />
+              </>
+            }
+          />
+          <Route
             path="/get-pet/dashboard"
             element={
               <>
