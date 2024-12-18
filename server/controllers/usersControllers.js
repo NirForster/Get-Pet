@@ -1,12 +1,6 @@
 const User = require("../models/userModel");
 const Pet = require("../models/petModel");
-const {
-  makeHashedPassword,
-  comparePassword,
-  generateToken,
-  login,
-} = require("../auth/auth.js");
-const verifyToken = require("../middlewares/verifyToken.js");
+const { makeHashedPassword, generateToken } = require("../auth/auth.js");
 
 const usersController = {
   //  Add a user (Sign up)
@@ -80,18 +74,10 @@ const usersController = {
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, phoneNumber, password, role, profilePicture } = req.body;
-
-      // If you are updating password, remember to hash it again:
-      // let updateFields = { name, phoneNumber, role, profilePicture };
-      // if (password) {
-      //   const hashedPassword = await makeHashedPassword(password);
-      //   updateFields.password = hashedPassword;
-      // }
-
+      const { role } = req.body;
       const updatedUser = await User.findByIdAndUpdate(
         id,
-        { name, phoneNumber, password, role, profilePicture },
+        { role },
         { new: true }
       );
 

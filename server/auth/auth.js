@@ -26,7 +26,7 @@ const login = async (req, res) => {
       return res.status(401).send({ message: "Invalid credentials" });
     }
 
-    const token = generateToken({ userId: user._id, role: user.role });
+    const token = await generateToken({ userId: user._id, role: user.role });
 
     return res.status(200).send({ token });
   } catch (error) {
@@ -60,9 +60,9 @@ const comparePassword = async (plainPassword, hashedPassword) => {
 };
 
 // Generate a JWT token for a user
-const generateToken = async (payload) => {
+const generateToken = (payload) => {
   // payload typically includes user ID, role, etc.
-  return await jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" }); // token valid for 7 days
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" }); // token valid for 7 days
 };
 
 module.exports = {

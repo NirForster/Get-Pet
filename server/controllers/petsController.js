@@ -16,11 +16,6 @@ petsController = {
     } catch (error) {}
   },
 
-  updatePet: async (req, res) => {
-    try {
-    } catch (error) {}
-  },
-
   deletePet: async (req, res) => {
     try {
     } catch (error) {}
