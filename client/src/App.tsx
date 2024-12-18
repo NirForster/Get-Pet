@@ -12,6 +12,7 @@ import ComingSoon from "./pages/ComingSoon/ComingSoon";
 import Landing from "./pages/Landing/Landing";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Logo from "./components/Logo/Logo";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/get-pet/search" element={<Search />} />
           <Route path="/get-pet/profile/:username" element={<Profile />} />
           <Route path="/get-pet/register" element={<Register />} />
+          <Route path="/get-pet/forget-password" element={<ForgetPassword />} />
           <Route path="/get-pet/Coming-soon" element={<ComingSoon />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
