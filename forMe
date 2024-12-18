@@ -95,5 +95,4 @@ savedSitters:
 If a user wants to save specific sitters they like, you can add the sitter’s \_id to the savedSitters array. This allows the user to keep a personalized list of sitters they’re interested in.
 
 todo:
-validate login info - dont let same user sign in twice
 validate role is adopter or sitter

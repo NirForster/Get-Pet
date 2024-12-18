@@ -6,13 +6,14 @@ const {
   generateToken,
   login,
 } = require("../auth/auth.js");
+const verifyToken = require("../middlewares/verifyToken.js");
 
 const usersController = {
   //  Add a user (Sign up)
   addUser: async (req, res) => {
     try {
-      const { name, phoneNumber, password, role } = req.body;
-      if (!name || !phoneNumber || !password || !role) {
+      const { name, phoneNumber, password } = req.body;
+      if (!name || !phoneNumber || !password) {
         return res
           .status(401)
           .send({ message: "Bad request. Missing fields." });
@@ -24,10 +25,16 @@ const usersController = {
         name,
         phoneNumber,
         password: hashedPassword,
-        role,
       });
 
-      res.status(201).json(newUser);
+      const token = await generateToken({ phoneNumber });
+      console.log(token);
+
+      res.status(201).json({
+        massage: "Sign up succesful!",
+        token: token,
+        newUser,
+      });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
