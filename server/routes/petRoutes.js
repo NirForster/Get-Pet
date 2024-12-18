@@ -20,9 +20,6 @@ router.get("/all", getAllPets);
 // get a specific pet
 router.get("/:id", getPetById);
 
-// update a pet
-router.put("/:id", updatePet);
-
 // remove a pet
 router.delete("/:id", verifyToken, deletePet);
 
