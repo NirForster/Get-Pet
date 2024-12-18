@@ -1,18 +1,26 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-
+const seedDatabase = require("../dummyData/seed.js");
 dotenv.config();
 
-mongoose.connect(process.env.URI);
+const connectDb = async () => {
+  try {
+    await mongoose.connect(process.env.URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-const db = mongoose.connection;
+    console.log("Connected to MongoDB successfully!");
 
-db.on("error", (err) => {
-  console.error("MongoDB connection error:", err);
-});
+    // Call seedDatabase
+    await seedDatabase();
 
-db.once("open", () => {
-  console.log("Connected to MongoDB successfully");
-});
+    mongoose.connection.close(); // Close the connection after seeding
+    console.log("Database connection closed.");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    mongoose.connection.close();
+  }
+};
 
-module.exports = db;
+connectDb();

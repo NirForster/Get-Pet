@@ -1,7 +1,24 @@
+import { useEffect } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoHeartCircleSharp } from "react-icons/io5";
 
 const Dashboard = () => {
+  const fetchPets = async () => {
+    try {
+      const res = await axios.get("");
+
+      if (res) {
+        console.log(res);
+      }
+    } catch (error) {
+      console.error("error occurred durning fetching pets data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div>
