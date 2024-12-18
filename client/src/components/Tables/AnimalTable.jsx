@@ -20,21 +20,21 @@ const dummyData = [
   {
     _id: "1",
     name: "rex",
-    status: "is still waiting for you.",
+    status: "Waiting for adoption.",
     imgUrl: dogSvg,
     association: "pt",
   },
   {
     _id: "2",
     name: "baba",
-    status: "is still waiting for you.",
+    status: "Waiting for adoption.",
     imgUrl: dogSvg,
     association: "ta",
   },
   {
     _id: "3",
     name: "yuvalllll",
-    status: "is still waiting for you.",
+    status: "Waiting for adoption.",
     imgUrl: dogSvg,
     association: "je",
   },
@@ -50,7 +50,7 @@ export default function AnimalTable() {
   }, []);
 
   return (
-    <TabsContent className="text-center" value="account">
+    <TabsContent className="text-center text-black" value="pets">
       <Table>
         <TableHeader>
           <TableRow>

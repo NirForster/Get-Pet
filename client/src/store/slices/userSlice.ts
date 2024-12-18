@@ -6,7 +6,7 @@ const userSlice = createSlice({
     displayName: "user-user",
     name: "user-user",
     bio: "user-user",
-    profileImg: "../../../public/images/profile-image-holder.svg",
+    profileImg: "./default-user-profile.svg",
     pronouns: "user-user",
     links: "user-user",
     banners: "user-user",
