@@ -4,14 +4,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
-import { duration, btnStyle } from "../../utils/helpers.js";
+import {
+  duration,
+  btnStyle,
+  inputPlaceholderStyle,
+} from "../../utils/helpers.js";
 
 const Register = () => {
   return (
     <div className="w-full">
       <form className="flex flex-col items-center gap-[0.5em] w-full">
         <Input
-          className="placeholder:text-gray-300"
+          className={`${inputPlaceholderStyle}`}
           placeholder="Phone number"
           name="phone-number"
           id="phone-number"
@@ -21,14 +25,14 @@ const Register = () => {
           placeholder="Name"
           name="name"
           id="name"
-          className="placeholder:text-gray-300"
+          className={`${inputPlaceholderStyle}`}
           required
         ></Input>
         <Input
           placeholder="Password"
           name="password"
           id="password"
-          className="placeholder:text-gray-300"
+          className={`${inputPlaceholderStyle}`}
           required
         ></Input>
         <div className="flex flex-row flex-wrap items-center gap-[0.2em]">
