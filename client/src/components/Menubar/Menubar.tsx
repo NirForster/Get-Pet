@@ -7,33 +7,33 @@ import { Link } from "react-router-dom";
 
 const Menubar = () => {
   return (
-    <div className="flex flex-row items-center justify-around w-full text-white bg-black absolute bottom-[0] left-0 py-[0.2em]">
+    <div className="flex flex-row items-center justify-around w-full text-white bg-black absolute bottom-[0] left-0 py-[0.1.5em] py-[0.5em]">
       <Link to="/get-pet/dashboard">
         <div
-          className={`${pointer} p-[1em] hover:bg-chosenBlue rounded-[0.5em]`}
+          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
         >
-          <FaDog style={{ fontSize: "2em" }} />
+          <FaDog style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
       <Link to="/get-pet/search">
         <div
-          className={`${pointer} p-[1em] hover:bg-chosenBlue rounded-[0.5em]`}
+          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
         >
-          <IoSearchOutline style={{ fontSize: "2em" }} />
+          <IoSearchOutline style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
       <Link to="/get-pet/messages">
         <div
-          className={`${pointer} p-[1em] hover:bg-chosenBlue rounded-[0.5em]`}
+          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
         >
-          <PiChatsCircle style={{ fontSize: "2em" }} />
+          <PiChatsCircle style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
       <Link to="/get-pet/settings">
         <div
-          className={`${pointer} p-[1em] hover:bg-chosenBlue rounded-[0.5em]`}
+          className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
         >
-          <IoSettingsOutline style={{ fontSize: "2em" }} />
+          <IoSettingsOutline style={{ fontSize: "1.5em" }} />
         </div>
       </Link>
     </div>

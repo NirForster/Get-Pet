@@ -14,6 +14,8 @@ import Error404 from "./pages/Error404/Error404";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Settings from "./pages/Settings/Settings";
 import Messages from "./pages/Messages/Messages";
+import Menubar from "./components/Menubar/Menubar";
+import TopNavbar from "./components/TopNavbar/TopNavbar";
 
 function App() {
   return (
@@ -33,11 +35,37 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/get-pet/login" element={<Login />} />
             <Route path="/get-pet/register" element={<Register />} />
-            <Route path="/get-pet/search" element={<Search />} />
-            <Route path="/get-pet/edit-profile" element={<ProfileSettings />} />
-            <Route path="/get-pet/messages" element={<Messages />} />
-            <Route path="/get-pet/settings" element={<Settings />} />
+            <Route
+              path="/get-pet/messages"
+              element={
+                <>
+                  <TopNavbar />
+                  <Messages />
+                  <Menubar />
+                </>
+              }
+            />
+            <Route
+              path="/get-pet/settings"
+              element={
+                <>
+                  <TopNavbar />
+                  <Settings />
+                  <Menubar />
+                </>
+              }
+            />
             <Route path="/get-pet/profile/:username" element={<Profile />} />
+            <Route
+              path="/get-pet/edit-profile"
+              element={
+                <>
+                  <TopNavbar />
+                  <ProfileSettings />
+                  <Menubar />
+                </>
+              }
+            />
             <Route
               path="/get-pet/forget-password"
               element={<ForgetPassword />}
@@ -45,7 +73,26 @@ function App() {
           </Route>
 
           {/* Route without Logo */}
-          <Route path="/get-pet/dashboard" element={<Dashboard />} />
+          <Route
+            path="/get-pet/search"
+            element={
+              <>
+                <TopNavbar />
+                <Search />
+                <Menubar />
+              </>
+            }
+          />
+          <Route
+            path="/get-pet/dashboard"
+            element={
+              <>
+                <TopNavbar />
+                <Dashboard />
+                <Menubar />
+              </>
+            }
+          />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
