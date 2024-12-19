@@ -12,11 +12,9 @@ const Dashboard = () => {
 
   const addPetToFavorite = async () => {
     if (!petId || userId) {
-      console.log(`Missing petId or userId`);
-
+      console.log(`${petId} || ${userId}`);
       return;
     }
-    console.log(petId);
 
     try {
       const res = await axios.post(
@@ -40,6 +38,7 @@ const Dashboard = () => {
 
       if (res) {
         setData(res.data?.data[0]);
+        setPetId(data?._id);
       }
     } catch (error) {
       console.error("Error occurred during fetching pets data:", error);
