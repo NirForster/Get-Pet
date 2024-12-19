@@ -49,6 +49,20 @@ const UserSchema = new mongoose.Schema(
         ref: "User", // referencing other users with role = "sitter"
       },
     ],
+
+    // Fields specific to sitters
+    sitterDetails: {
+      location: {
+        type: String,
+        enum: ["Central District", "Southern District", "Northern District"],
+      },
+      availability: {
+        from: { type: String, match: /^[0-2][0-9]{3}$/ }, // 4 digits, e.g., "0800"
+        to: { type: String, match: /^[0-2][0-9]{3}$/ }, // 4 digits, e.g., "1800"
+      },
+      hourlyRate: { type: Number, min: 0 },
+      ranking: { type: Number, min: 1, max: 5 }, // 1 to 5 ranking
+    },
   },
 
   { timestamps: true }
