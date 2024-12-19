@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Menubar = () => {
   return (
-    <div className="flex flex-row items-center justify-evenly w-full text-white bg-black absolute bottom-[0] left-0 py-[0.1.5em] py-[0.5em]">
+    <div className="flex flex-row items-center justify-evenly w-full text-white bg-black fixed bottom-[0] left-0 py-[0.1.5em] py-[0.5em]">
       <Link to="/get-pet/dashboard">
         <div
           className={`${pointer} px-[0.5em] py-[0.5em] hover:bg-chosenBlue rounded-[0.5em]`}
