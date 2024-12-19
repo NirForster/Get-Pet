@@ -13,6 +13,7 @@ const {
   saveSitters,
   getUserByPhoneNumber,
   updateToSitter,
+  getAllSitters,
 } = require("../controllers/usersControllers.js");
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.post("/login", login);
 
 // User retrieval routes
 router.get("/all", getAllUsers);
+router.get("/sitters/all", getAllSitters);
 router.get("/:id", getUserById);
 router.get("/phone/:phoneNumber", getUserByPhoneNumber);
 
