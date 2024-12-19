@@ -51,26 +51,6 @@ const usersController = {
     }
   },
 
-  // Get all users
-  getAllUsers: async (req, res) => {
-    try {
-      const users = await User.find();
-      let sitters = [];
-      const filteredUsers = users.filter((user) => {
-        if (user.role !== "adopter") {
-          sitters.push({ user });
-        }
-        console.log(sitters);
-      });
-      if (users.role !== "adopter") {
-        return;
-      }
-      res.status(200).json(users);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
   // Get all sitters
   getAllSitters: async (req, res) => {
     try {
