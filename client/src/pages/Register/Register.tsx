@@ -35,7 +35,7 @@ const Register: React.FC = () => {
   }) => {
     try {
       const res = await axios.post(
-        "https://get-pet-backend-server.onrender.com/users/register",
+        "http://localhost:3000/users/register",
         data
       );
 

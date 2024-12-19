@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const res = await axios.post(
-        `https://get-pet-backend-server.onrender.com/users/${userId}/likePet`,
+        `http://localhost:3000/users/${userId}/likePet`,
         { petId }
       );
 
@@ -65,9 +65,7 @@ const Dashboard: React.FC = () => {
       setLoading(true); // Show loader
       const res = await axios.get<{
         data: PetData[];
-      }>(
-        `https://get-pet-backend-server.onrender.com/pets/all?page=${page}&limit=1`
-      );
+      }>(`http://localhost:3000/pets/all?page=${page}&limit=1`);
 
       if (res) {
         const pet = res.data?.data[0];

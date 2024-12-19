@@ -73,7 +73,7 @@ const Questionnaire = () => {
   };
 
   const submitData = async () => {
-    const url = `https://get-pet-backend-server.onrender.com/users/${userId}/role/sitter`;
+    const url = `http://localhost:3000/users/${userId}/role/sitter`;
     const payload = {
       location: answers.location,
       availabilityFrom: answers.availabilityFrom,

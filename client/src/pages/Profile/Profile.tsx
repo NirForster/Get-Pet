@@ -38,9 +38,7 @@ export default function Profile() {
 
   const fetchPersonalData = async () => {
     try {
-      const res = await axios.get(
-        `https://get-pet-backend-server.onrender.com/users/${userId}`
-      );
+      const res = await axios.get(`http://localhost:3000/users/${userId}`);
       if (res?.data) {
         console.log(res);
 
