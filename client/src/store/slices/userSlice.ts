@@ -4,7 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     cookie: "",
-    name: "user",
+    name: "",
     profileImg: "/default-user-profile.svg",
     role: "adopter",
   },

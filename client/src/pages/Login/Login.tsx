@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { duration, btnStyle } from "../../utils/helpers.js";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { setGlobalCookie } from "../../store/slices/userSlice";
+import {
+  setGlobalCookie,
+  setProfilePicUser,
+  setRole,
+  setUser,
+} from "../../store/slices/userSlice";
 
 interface LoginData {
   phoneNumber: string;
@@ -17,23 +22,32 @@ interface LoginData {
 }
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(setProfilePicUser(userData?.user?.profilePic));
-
   const [login, setLogin] = useState<boolean>(false);
+  const [userData, setUserData] = useState<boolean>(null);
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const loginUser = async (data: LoginData): Promise<void> => {
     try {
-      const res: AxiosResponse<{ token: string }> = await axios.post(
-        "http://localhost:3000/users/login",
-        data
-      );
+      const res = await axios.post("http://localhost:3000/users/login", data);
+
       if (res) {
+        const user = res.data.user;
+
+        // Dispatch Redux actions directly with response data
+        dispatch(setUser(user.name));
+        dispatch(setProfilePicUser(user.profilePicture));
+        dispatch(setRole(user.role));
+
         console.log("User logged in successfully:", res.data);
+
+        // Set the token in cookies and Redux state
         setTimeout(() => {
           Cookies.set("token", res.data.token, { expires: 7 });
           dispatch(setGlobalCookie(res.data.token));
+          navigate("/get-pet/dashboard");
         }, 1000);
         setLogin(true);
       }
@@ -44,6 +58,8 @@ const Login: React.FC = () => {
       );
     }
   };
+
+  console.log(userData);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

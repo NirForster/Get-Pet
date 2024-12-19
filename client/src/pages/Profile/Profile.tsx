@@ -1,5 +1,4 @@
 import AnimalTable from "../../components/Tables/AnimalTable.jsx";
-import { useEffect } from "react";
 import {
   Tabs,
   TabsContent,
@@ -8,42 +7,21 @@ import {
 } from "../../components/ui/tabs.tsx";
 import { Avatar, AvatarImage } from "../../components/ui/avatar.tsx";
 import { useSelector } from "react-redux";
-import { setProfilePicUser } from "@/store/slices/userSlice.ts";
-import axios from "axios";
 
 export default function Profile() {
-  const fetchUserData = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/users/:id");
-      if (res) {
-        console.log(res);
-      }
-    } catch (error) {
-      console.error(
-        "error occurred durning getting user profile data: ",
-        error
-      );
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  const { name, profileImg } = useSelector((state: any) => state.user);
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-[1em] absolute top-[5em] left-0 p-[1em] text-black">
       <div className="flex flex-row items-center w-full justify-center bg-gray-200 rounded-[0.5em] p-[1em] h-[150px] gap-[0.5em]">
         <div>
           <Avatar>
-            <AvatarImage
-              src="/default-user-profile.svg"
-              alt="profile Image user"
-            />
+            <AvatarImage src={profileImg} alt={`${name}'s profile`} />
           </Avatar>
         </div>
         <div className="flex flex-col">
-          <div>Name</div>
-          <div>Since: 10.10.2000</div>
+          <div>{name || "User"}</div>
+          <div>Since: 10.10.2000</div> {/* Placeholder for join date */}
         </div>
       </div>
       <Tabs className="w-72 h-[300px]" defaultValue="pets">
