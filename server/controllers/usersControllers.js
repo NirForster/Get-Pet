@@ -41,21 +41,21 @@ const usersController = {
     }
   },
 
-  // Get all users
-  getAllUsers: async (req, res) => {
-    try {
-      const users = await User.find();
-      res.status(200).json(users);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
   // Get all sitters
   getAllSitters: async (req, res) => {
     try {
       const sitters = await User.find({ role: "sitter" });
       res.status(200).json(sitters);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // Get all users
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await User.find();
+      res.status(200).json(users);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
