@@ -7,6 +7,8 @@ const usersController = {
   addUser: async (req, res) => {
     try {
       const { name, phoneNumber, password } = req.body;
+      console.log(phoneNumber);
+
       if (!name || !phoneNumber || !password) {
         return res
           .status(401)
