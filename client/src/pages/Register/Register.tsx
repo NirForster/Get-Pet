@@ -18,6 +18,7 @@ import {
   setProfilePicUser,
   setRole,
   setUser,
+  setUserId,
 } from "@/store/slices/userSlice.js";
 
 const Register: React.FC = () => {
@@ -39,11 +40,12 @@ const Register: React.FC = () => {
 
       if (res) {
         const user = res.data.user;
-
+        console.log(user);
         // Dispatch Redux actions directly with response data
         dispatch(setUser(user.name));
         dispatch(setProfilePicUser(user.profilePicture));
         dispatch(setRole(user.role));
+        dispatch(setUserId(user._id));
 
         console.log("User registered successfully:", res.data);
 

@@ -7,9 +7,31 @@ import {
 } from "../../components/ui/tabs.tsx";
 import { Avatar, AvatarImage } from "../../components/ui/avatar.tsx";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import formatDate from "../../utils/formatDate.js";
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter.js";
 
 export default function Profile() {
-  const { name, profileImg } = useSelector((state: any) => state.user);
+  const { name, profileImg, userId } = useSelector((state: any) => state.user);
+  const [userPersonalData, setUserPersonalData] = useState(null);
+
+  const fetchPersonalData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/users/${userId}`);
+
+      if (res) {
+        console.log(res);
+        setUserPersonalData(res.data);
+      }
+    } catch (error) {
+      console.error("error occurred durning fetching personal data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPersonalData();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-[1em] absolute top-[5em] left-0 p-[1em] text-black">
@@ -20,8 +42,8 @@ export default function Profile() {
           </Avatar>
         </div>
         <div className="flex flex-col">
-          <div>{name || "User"}</div>
-          <div>Since: 10.10.2000</div> {/* Placeholder for join date */}
+          <div>{capitalizeFirstLetter(name) || "User"}</div>
+          <div>Member since: {formatDate(userPersonalData?.createdAt)}</div>
         </div>
       </div>
       <Tabs className="w-72 h-[300px]" defaultValue="pets">

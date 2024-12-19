@@ -2,17 +2,30 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoHeartCircleSharp } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
-  const [petId, setPetId] = useState("");
+  const [petId, setPetId] = useState(null);
+  const userId = useSelector((state: any) => state.user.userId);
 
   const addPetToFavorite = async () => {
+    if (!petId || userId) {
+      console.log(`Missing petId or userId`);
+
+      return;
+    }
+    console.log(petId);
+
     try {
-      const res = await axios.post(`http://localhost:3000/users/:id/likePet`);
+      const res = await axios.post(
+        `http://localhost:3000/users/${userId}/likePet`,
+        petId
+      );
 
       if (res) {
+        console.log(res);
       }
     } catch (error) {
       console.error(`error occurred while like pet: `, error);
@@ -26,7 +39,7 @@ const Dashboard = () => {
       );
 
       if (res) {
-        setData(res.data.data[0]);
+        setData(res.data?.data[0]);
       }
     } catch (error) {
       console.error("Error occurred during fetching pets data:", error);
