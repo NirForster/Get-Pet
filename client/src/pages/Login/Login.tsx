@@ -16,6 +16,7 @@ import {
   setUserId,
 } from "../../store/slices/userSlice";
 import { GoogleLogin } from "@react-oauth/google";
+import GoogleBtn from "@/components/GoogleBtn/GoogleBtn.js";
 
 interface LoginData {
   phoneNumber: string;
@@ -125,6 +126,7 @@ const Login: React.FC = () => {
         </div>
         <div className="flex w-full flex-row items-center gap-[0.5em]">
           <AppleBtn />
+          <GoogleBtn />
         </div>
       </form>
     </div>

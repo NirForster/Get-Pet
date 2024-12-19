@@ -4,64 +4,79 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
-const Dashboard = () => {
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState(null);
-  const [petId, setPetId] = useState(null);
-  const userId = useSelector((state: any) => state.user.userId);
+// Define the types for your pet data
+interface PetData {
+  _id: string;
+  name: string;
+  age: number;
+  breed: string;
+  description: string;
+  adoptionCenter: string;
+  images: string[];
+}
+
+// Define the shape of the Redux state
+interface RootState {
+  user: {
+    userId: string;
+  };
+}
+
+const Dashboard: React.FC = () => {
+  const [page, setPage] = useState<number>(1);
+  const [data, setData] = useState<PetData | null>(null);
+  const [petId, setPetId] = useState<string | null>(null);
+  const userId = useSelector((state: RootState) => state.user.userId);
 
   const addPetToFavorite = async () => {
-    if (!petId || userId) {
+    if (!petId || !userId) {
       console.log(`petId is ${petId}`);
       console.log(`userId is ${userId}`);
-
       return;
     }
 
     try {
       const res = await axios.post(
         `http://localhost:3000/users/${userId}/likePet`,
-        petId
+        { petId }
       );
 
       if (res) {
-        console.log(res);
+        console.log(res.data);
       }
     } catch (error) {
-      console.error(`error occurred while like pet: `, error);
+      console.error(`Error occurred while liking pet: `, error);
     }
   };
 
   const fetchPets = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/pets/all?page=${page}&limit=1`
-      );
+      const res = await axios.get<{
+        data: PetData[];
+      }>(`http://localhost:3000/pets/all?page=${page}&limit=1`);
 
       if (res) {
-        setData(res.data?.data[0]);
-        setPetId(data?._id);
+        const pet = res.data?.data[0];
+        setData(pet);
+        setPetId(pet?._id || null);
       }
     } catch (error) {
       console.error("Error occurred during fetching pets data:", error);
     }
   };
 
-  const handleClick = (e) => {
-    const btn = e.target.closest("button");
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const btn = (e.target as HTMLButtonElement).closest("button");
 
-    if (btn.value === "next") {
+    if (btn?.value === "next") {
       setPage((prev) => prev + 1);
       addPetToFavorite();
-    } else if (btn.value === "declined") {
+    } else if (btn?.value === "declined") {
       setPage((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
-    if (userId && petId) {
-    }
-
     fetchPets();
   }, [page]);
 
