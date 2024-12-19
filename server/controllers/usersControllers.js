@@ -119,6 +119,9 @@ const usersController = {
       const { location, availabilityFrom, availabilityTo, hourlyRate } =
         req.body;
 
+      // Generate a random ranking between 1 and 5
+      const randomRanking = Math.floor(Math.random() * 5) + 1;
+
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         {
@@ -127,9 +130,10 @@ const usersController = {
             location,
             availability: { from: availabilityFrom, to: availabilityTo },
             hourlyRate,
+            ranking: randomRanking, // Set the generated ranking
           },
         },
-        { new: true }
+        { new: true, runValidators: true } // Ensure validators are applied
       );
 
       if (!updatedUser) {
