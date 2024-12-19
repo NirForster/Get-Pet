@@ -2,8 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { isUserAllowed } from "../../utils/isAuth.js";
 
 const Questionnaire = () => {
+  const navigate = useNavigate();
+  const canContinue = isUserAllowed();
+
+  if (!canContinue) {
+    navigate("/get-pet/register");
+  }
+
   const userId = useSelector((state) => state.user.userId);
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -14,7 +22,6 @@ const Questionnaire = () => {
     availabilityTo: "",
     hourlyRate: "",
   });
-  const navigate = useNavigate();
 
   const questions = [
     {

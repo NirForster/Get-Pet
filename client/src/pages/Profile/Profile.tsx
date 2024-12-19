@@ -1,4 +1,6 @@
 import AnimalTable from "../../components/Tables/AnimalTable.jsx";
+import { isUserAllowed } from "../../utils/isAuth.js";
+
 import {
   Tabs,
   TabsContent,
@@ -12,8 +14,15 @@ import axios from "axios";
 import formatDate from "../../utils/formatDate.js";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter.js";
 import Loader from "@/components/Loader/Loader.tsx";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const canContinue = isUserAllowed();
+
+  if (!canContinue) {
+    navigate("/get-pet/register");
+  }
   const {
     name = "User",
     profileImg = "",

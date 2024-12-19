@@ -1,6 +1,15 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, UserCircle, UserCog } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User, UserCircle, UserCog } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { isUserAllowed } from "../../utils/isAuth.js";
+
 const Messages = () => {
+  const navigate = useNavigate();
+  const canContinue = isUserAllowed();
+
+  if (!canContinue) {
+    navigate("/get-pet/register");
+  }
   return (
     <div className="p-6 max-w-lg mx-auto">
       {/* Main card */}

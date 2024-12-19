@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { isUserAllowed } from "../../utils/isAuth.js";
+import { useNavigate } from "react-router-dom";
 
 // Define the types for your pet data
 interface PetData {
@@ -23,6 +25,13 @@ interface RootState {
 }
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const canContinue = isUserAllowed();
+
+  if (!canContinue) {
+    navigate("/get-pet/register");
+  }
+
   const [page, setPage] = useState<number>(1);
   const [data, setData] = useState<PetData | null>(null);
   const [petId, setPetId] = useState<string | null>(null);
