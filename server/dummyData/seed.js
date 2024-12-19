@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
 
-const AdoptionRequest = require("../models/adoptionRequestModel");
 const Pet = require("../models/petModel");
 const User = require("../models/userModel");
 
