@@ -55,7 +55,10 @@ const usersController = {
   getUserById: async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await User.findById(id);
+      const user = await User.findById(id).populate({
+        path: "likedPets",
+        select: "-__v -createdAt -updatedAt",
+      });
       if (!user) return res.status(404).json({ message: "User not found" });
       res.status(200).json(user);
     } catch (error) {
@@ -110,15 +113,58 @@ const usersController = {
     }
   },
 
+  updateToSitter: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { location, availabilityFrom, availabilityTo, hourlyRate } =
+        req.body;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          role: "sitter",
+          sitterDetails: {
+            location,
+            availability: { from: availabilityFrom, to: availabilityTo },
+            hourlyRate,
+          },
+        },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found." });
+      }
+
+      res.status(200).json({
+        message: "User updated to sitter successfully.",
+        data: updatedUser,
+      });
+    } catch (error) {
+      console.error("Error updating user to sitter:", error);
+      res.status(500).json({ message: "Internal server error." });
+    }
+  },
+
   // Get the user’s liked pets
   // Assumes likedPets is an array of Pet _id references
   getLikedPets: async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await User.findById(id).populate("likedPets");
-      if (!user) return res.status(404).json({ message: "User not found" });
-      res.status(200).json(user.likedPets);
+
+      // Find the user and populate the likedPets field
+      const user = await User.findById(id).populate({
+        path: "likedPets",
+        select: "-__v -createdAt -updatedAt", // Exclude unwanted fields
+      });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.status(200).json(user.likedPets); // Return the populated likedPets
     } catch (error) {
+      console.error("Error fetching liked pets:", error);
       res.status(400).json({ error: error.message });
     }
   },
@@ -138,6 +184,7 @@ const usersController = {
   },
 
   // Add a pet to the user’s likedPets array
+  // Add a pet to the user’s likedPets array
   likePet: async (req, res) => {
     try {
       const { id } = req.params; // user ID
@@ -155,10 +202,22 @@ const usersController = {
         return res.status(400).json({ message: "Pet already liked" });
       }
 
+      // Add pet to likedPets array
       user.likedPets.push(petId);
       await user.save();
-      res.status(200).json({ message: "Pet liked successfully", user });
+
+      // Populate likedPets and return the updated list
+      const updatedUser = await User.findById(id).populate({
+        path: "likedPets",
+        select: "-__v -createdAt -updatedAt", // Exclude unwanted fields
+      });
+
+      res.status(200).json({
+        message: "Pet liked successfully",
+        likedPets: updatedUser.likedPets,
+      });
     } catch (error) {
+      console.error("Error liking pet:", error);
       res.status(400).json({ error: error.message });
     }
   },

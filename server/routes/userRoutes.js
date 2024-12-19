@@ -12,41 +12,33 @@ const {
   likePet,
   saveSitters,
   getUserByPhoneNumber,
+  updateToSitter,
 } = require("../controllers/usersControllers.js");
 
 const router = express.Router();
 
-// add user
+// Authentication routes
 router.post("/register", addUser);
-
-// add user
 router.post("/login", login);
 
-// get all users
+// User retrieval routes
 router.get("/all", getAllUsers);
-
-// get user by id
 router.get("/:id", getUserById);
-
-// get User By Phone Number
 router.get("/phone/:phoneNumber", getUserByPhoneNumber);
 
-// delete user by id
+// User update routes
+router.put("/:id/update", updateUser);
+router.put("/:id/role/sitter", updateToSitter);
+
+// User deletion route
 router.delete("/:id", deleteUser);
 
-// update user by id
-router.put("/:id/update", updateUser);
-
-// get the user’s liked pets
+// User-specific data retrieval routes
 router.get("/:id/likedPets", getLikedPets);
-
-// get the user’s saved sitters
 router.get("/:id/savedSitters", getSavedUsers);
 
-// add a pet to likedPets
+// User-specific data modification routes
 router.post("/:id/likePet", likePet);
-
-// add a sitter to savedSitters
 router.post("/:id/saveSitters", saveSitters);
 
 module.exports = router;
