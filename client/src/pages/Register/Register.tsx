@@ -148,7 +148,11 @@ const Register: React.FC = () => {
         </Button>
         <div className="flex items-center justify-between w-full">
           <hr className="flex-grow" />
-          <p className="px-4 text-[0.8em] text-gray-400">Or Login with</p>
+          <p className="px-4 text-[0.8em] text-gray-400 hover:text-black">
+            <Link to="/get-pet/login" className="hover:text-black">
+              Or Login with
+            </Link>
+          </p>
           <hr className="flex-grow" />
         </div>
         <div className="flex w-full flex-row items-center gap-[0.5em]">

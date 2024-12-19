@@ -130,7 +130,15 @@ function App() {
                 </>
               }
             />
-            <Route path="*" element={<Error404 />} />
+            <Route
+              path="*"
+              element={
+                <>
+                  <Logo customLogoStyle={""} />
+                  <Error404 />
+                </>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Provider>

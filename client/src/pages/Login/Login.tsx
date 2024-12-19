@@ -125,11 +125,15 @@ const Login: React.FC = () => {
           Forget password?
         </Link>
         <Button type="submit" className={`${btnStyle} ${duration}`}>
-          Login
+          <Link to="/get-pet/login" className="hover:text-black">
+            Login
+          </Link>
         </Button>
         <div className="flex items-center justify-between w-full">
           <hr className="flex-grow" />
-          <p className="px-4 text-[0.8em] text-gray-400">Or Register with</p>
+          <p className="px-4 text-[0.8em] text-gray-500 hover:text-black">
+            <Link to="/get-pet/register">Or Register with</Link>
+          </p>
           <hr className="flex-grow" />
         </div>
         <div className="flex w-full flex-row items-center gap-[0.5em]">
