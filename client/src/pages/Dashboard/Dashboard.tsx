@@ -12,7 +12,9 @@ const Dashboard = () => {
 
   const addPetToFavorite = async () => {
     if (!petId || userId) {
-      console.log(`${petId} || ${userId}`);
+      console.log(`petId is ${petId}`);
+      console.log(`userId is ${userId}`);
+
       return;
     }
 
@@ -57,6 +59,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    if (userId && petId) {
+    }
+
     fetchPets();
   }, [page]);
 

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
 import axios from "axios";
@@ -22,6 +22,7 @@ import {
 } from "@/store/slices/userSlice.js";
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [register, setRegister] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -55,6 +56,7 @@ const Register: React.FC = () => {
         }, 1500);
 
         setRegister(true);
+        navigate("/get-pet/question-user");
       }
     } catch (error: any) {
       console.error(
