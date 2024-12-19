@@ -5,9 +5,18 @@ import { Link } from "react-router-dom";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
 import { duration } from "../../utils/helpers.js";
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Landing = () => {
+  const login = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      console.log("Success:", credentialResponse);
+    },
+    onError: (error) => {
+      console.error("Error:", error);
+    },
+  });
+
   return (
     <div className="flex flex-col items-center w-full justify-center font-contextFont text-center gap-[0.5em]">
       <div className="relative">
@@ -33,14 +42,7 @@ const Landing = () => {
             </Link>
             <FiArrowUpRight className="absolute top-[0.1em] right-[0em] text-white" />
           </div>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              console.log("Success:", credentialResponse);
-            }}
-            onError={(error) => {
-              console.error("Error:", error);
-            }}
-          />{" "}
+          <GoogleBtn onClick={login} />
           <AppleBtn />
         </div>
         <div className="w-full flex-row flex justify-center mt-[0.5em] text-[0.8em] gap-[0.5em]">
