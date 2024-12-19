@@ -23,10 +23,18 @@ export default function Profile() {
   const [favoritePets, setFavoritePets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  if (!name && profileImg && userId) {
+    return;
+  }
+
   const fetchPersonalData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
+      const res = await axios.get(
+        `https://get-pet-backend-server.onrender.com/users/${userId}`
+      );
       if (res?.data) {
+        console.log(res);
+
         setUserPersonalData(res?.data);
         setFavoritePets(res?.data?.likedPets || []);
       }

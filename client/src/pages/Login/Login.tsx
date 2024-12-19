@@ -33,7 +33,10 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/users/login", data);
+      const res = await axios.post(
+        "https://get-pet-backend-server.onrender.com/users/login",
+        data
+      );
 
       if (res) {
         const user = res.data.user;
