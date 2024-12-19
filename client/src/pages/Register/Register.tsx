@@ -13,10 +13,19 @@ import {
 } from "../../utils/helpers.js";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import {
+  setProfilePicUser,
+  setRole,
+  setUser,
+  setUserId,
+} from "@/store/slices/userSlice.js";
 
 const Register: React.FC = () => {
+  const dispatch = useDispatch();
   const [register, setRegister] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [userData, setUserData] = useState();
 
   const registerUser = async (data: {
     name: string;
@@ -28,11 +37,23 @@ const Register: React.FC = () => {
         "http://localhost:3000/users/register",
         data
       );
+
       if (res) {
+        const user = res.data.user;
+        console.log(user);
+        // Dispatch Redux actions directly with response data
+        dispatch(setUser(user.name));
+        dispatch(setProfilePicUser(user.profilePicture));
+        dispatch(setRole(user.role));
+        dispatch(setUserId(user._id));
+
+        console.log("User registered successfully:", res.data);
+
+        // Set the token in cookies
         setTimeout(() => {
-          console.log("User registered successfully:", res.data);
-          Cookies.set("token", res.data.token, { expire: 7 });
+          Cookies.set("token", res.data.token, { expires: 7 });
         }, 1500);
+
         setRegister(true);
       }
     } catch (error: any) {

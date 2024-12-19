@@ -48,6 +48,7 @@ const petsController = {
       const totalPets = await Pet.countDocuments();
 
       // Retrieve the pets with pagination
+
       const pets = await Pet.find().skip(skip).limit(limit).exec();
 
       // Calculate total pages
