@@ -7,14 +7,11 @@ import {
   TabsTrigger,
 } from "../../components/ui/tabs.tsx";
 import { Avatar, AvatarImage } from "../../components/ui/avatar.tsx";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { setProfilePicUser } from "@/store/slices/userSlice.ts";
 import axios from "axios";
 
 export default function Profile() {
-  const dispatch = useDispatch();
-  // dispatch(setProfilePicUser(''));
-
   const fetchUserData = async () => {
     try {
       const res = await axios.get("http://localhost:3000/users/:id");

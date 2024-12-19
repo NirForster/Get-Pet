@@ -13,10 +13,15 @@ import {
 } from "../../utils/helpers.js";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { setProfilePicUser, setUser } from "@/store/slices/userSlice.js";
 
 const Register: React.FC = () => {
+  const dispatch = useDispatch();
+  dispatch(setProfilePicUser(user.profilePicture));
   const [register, setRegister] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [userData, setUserData] = useState({});
 
   const registerUser = async (data: {
     name: string;
@@ -29,6 +34,7 @@ const Register: React.FC = () => {
         data
       );
       if (res) {
+        setUserData(res.data);
         setTimeout(() => {
           console.log("User registered successfully:", res.data);
           Cookies.set("token", res.data.token, { expire: 7 });

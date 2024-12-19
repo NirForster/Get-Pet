@@ -18,7 +18,7 @@ interface LoginData {
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  // dispatch(setProfilePicUser(userData?.user?.profilePic));
+  dispatch(setProfilePicUser(userData?.user?.profilePic));
 
   const [login, setLogin] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);

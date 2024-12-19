@@ -6,6 +6,7 @@ const userSlice = createSlice({
     cookie: "",
     name: "user",
     profileImg: "/default-user-profile.svg",
+    role: "adopter",
   },
   reducers: {
     setGlobalCookie: (state, action) => {
@@ -17,10 +18,13 @@ const userSlice = createSlice({
     setProfilePicUser: (state, action) => {
       state.profileImg = action.payload;
     },
+    setRole: (state, action) => {
+      state.role = action.payload;
+    },
   },
 });
 
-export const { setUser, setProfilePicUser, setGlobalCookie } =
+export const { setUser, setProfilePicUser, setGlobalCookie, setRole } =
   userSlice.actions;
 
 export default userSlice.reducer;
