@@ -24,7 +24,7 @@ router.post("/login", login);
 
 // User retrieval routes
 router.get("/all", getAllUsers);
-router.get("/sitters/all", getAllSitters);
+router.get("/sitters", getAllSitters);
 router.get("/:id", getUserById);
 router.get("/phone/:phoneNumber", getUserByPhoneNumber);
 

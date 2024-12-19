@@ -54,9 +54,7 @@ const usersController = {
   // Get all sitters
   getAllSitters: async (req, res) => {
     try {
-      const sitters = await User.find({ role: "sitter" }).select(
-        "name profilePicture sitterDetails"
-      );
+      const sitters = await User.find({ role: "sitter" });
       res.status(200).json(sitters);
     } catch (error) {
       res.status(400).json({ error: error.message });
