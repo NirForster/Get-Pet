@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const phoneRegExp = /^(?:\+972|0)(?:[23489]\d{7}|5\d{8})$/;
+const phoneRegExp = /^(?:\\+972|0)(?:[23489]\\d{7}|5\\d{8})$/;
 
 const validatePhoneNumber = function (phoneNumber) {
   return phoneRegExp.test(phoneNumber);
@@ -34,11 +34,15 @@ const UserSchema = new mongoose.Schema(
         "https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg",
     },
 
-    // Array of Pets the user has liked
+    // Array of Pets the user has liked along with adoption status
     likedPets: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Pet",
+        petId: { type: mongoose.Schema.Types.ObjectId, ref: "Pet" },
+        status: {
+          type: String,
+          enum: ["pending", "approved", "rejected"],
+          default: "pending",
+        },
       },
     ],
 
