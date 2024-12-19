@@ -19,6 +19,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
 import Privacy from "./pages/Privacy/Privacy";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
                   <TopNavbar />
                   <Messages />
                   <Menubar />
+                </>
+              }
+            />
+            <Route
+              path="/get-pet/loader"
+              element={
+                <>
+                  <Loader />
                 </>
               }
             />

@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/users/${userId}/likePet`,
+        `https://get-pet-backend-server.onrender.com/users/${userId}/likePet`,
         { petId }
       );
 
@@ -53,7 +53,9 @@ const Dashboard: React.FC = () => {
     try {
       const res = await axios.get<{
         data: PetData[];
-      }>(`http://localhost:3000/pets/all?page=${page}&limit=1`);
+      }>(
+        `https://get-pet-backend-server.onrender.com/pets/all?page=${page}&limit=1`
+      );
 
       if (res) {
         const pet = res.data?.data[0];
