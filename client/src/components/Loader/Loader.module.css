@@ -8,16 +8,23 @@
 .loader:after {
   content: "";
   grid-area: 1/1;
-  --_g: no-repeat radial-gradient(farthest-side, #000 94%, #0000);
+  --left-color: #4b96d5; /* Blue */
+  --right-color: #000000; /* Black */
+  --_g-left: no-repeat
+    radial-gradient(farthest-side, var(--left-color) 94%, #0000);
+  --_g-right: no-repeat
+    radial-gradient(farthest-side, var(--right-color) 94%, #0000);
   background:
-    var(--_g) left,
-    var(--_g) right;
+    var(--_g-left) left,
+    var(--_g-right) right;
   background-size: 25% 100%;
   animation: l34 1s infinite;
   transform: translate(var(--d, 0)) rotate(0);
 }
 .loader:after {
   --d: 37.5%;
+  --left-color: #fea910; /* Orange */
+  --right-color: #d82221; /* Orange */
   animation-delay: 0.5s;
 }
 @keyframes l34 {
