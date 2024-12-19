@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User, UserCircle, UserCog } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { isUserAllowed } from "../../utils/isAuth.js";
 
