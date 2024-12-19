@@ -5,7 +5,6 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const petRoutes = require("./routes/petRoutes");
-const adoptionRequestRoutes = require("./routes/adoptionRequestRoutes");
 
 dotenv.config();
 
@@ -28,7 +27,6 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRoutes);
 app.use("/pets", petRoutes);
-app.use("/adoptionRequests", adoptionRequestRoutes);
 
 const PORT = process.env.PORT || 3000;
 
