@@ -25,7 +25,7 @@ const Landing = () => {
           <div className="relative flex flex-row">
             <Link to="/get-pet/register">
               <Button
-                className={`w-[10em] flex justify-center items-center hover:bg-chosenYellow h-[3.6em] ${duration}`}
+                className={`w-[10em] flex justify-center items-center hover:bg-chosenYellow h-[3.9em] ${duration}`}
               >
                 Get Started
               </Button>
