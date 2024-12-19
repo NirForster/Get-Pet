@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { TabsContent } from "../../components/ui/tabs.tsx";
+import dogSvg from "/dog-svgrepo-com.svg";
 import {
   Table,
   TableBody,
@@ -34,44 +35,45 @@ const dummyData = [
   },
 ];
 
-import dogSvg from "/dog-svgrepo-com.svg";
-export default function AnimalTable() {
+export default function AnimalTable({ favoritePets = [] }) {
   const [animals, setAnimals] = useState([]);
 
   useEffect(() => {
-    // fetch data from backend
-    setAnimals(dummyData);
-  }, []);
+    if (favoritePets.length > 0) {
+      setAnimals(favoritePets);
+    }
+  }, [favoritePets]);
+
+  if (!favoritePets || favoritePets.length === 0) {
+    return <div>No favorite pets found.</div>;
+  }
 
   return (
-    <TabsContent className="text-center text-black" value="pets">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {/* <TableHead className="w-[100px]">name</TableHead> */}
-            <TableHead>Name</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Image</TableHead>
-            <TableHead>Association</TableHead>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Image</TableHead>
+          <TableHead>Association</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {favoritePets.map((animal) => (
+          <TableRow key={animal._id}>
+            <TableCell className="font-medium">{animal.name}</TableCell>
+            <TableCell>{animal.status || "No status available"}</TableCell>
+            <TableCell>
+              <img
+                src={animal.images?.[0] || dogSvg}
+                alt={animal.name}
+                className="w-10 h-10"
+              />
+            </TableCell>
+            <TableCell>{animal.association}</TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {animals.map((animal) => {
-            return (
-              <TableRow key={animal._id}>
-                <TableCell className="font-medium">{animal.name}</TableCell>
-                <TableCell>
-                  {animal.name} {animal.status}
-                </TableCell>
-                <TableCell>
-                  <img src={animal.imgUrl}></img>
-                </TableCell>
-                <TableCell>{animal.association}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TabsContent>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

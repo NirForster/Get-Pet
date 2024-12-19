@@ -15,8 +15,8 @@ import {
   setUser,
   setUserId,
 } from "../../store/slices/userSlice";
-import { GoogleLogin } from "@react-oauth/google";
 import GoogleBtn from "@/components/GoogleBtn/GoogleBtn.js";
+import Loader from "@/components/Loader/Loader";
 
 interface LoginData {
   phoneNumber: string;
@@ -26,12 +26,12 @@ interface LoginData {
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, setLogin] = useState<boolean>(false);
-  const [userData, setUserData] = useState<boolean>(null);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const loginUser = async (data: LoginData): Promise<void> => {
+    setIsLoading(true);
+
     try {
       const res = await axios.post("http://localhost:3000/users/login", data);
 
@@ -48,22 +48,22 @@ const Login: React.FC = () => {
         console.log("User logged in successfully:", res.data);
 
         // Set the token in cookies and Redux state
+        Cookies.set("token", res.data.token, { expires: 7 });
+        dispatch(setGlobalCookie(res.data.token));
+
         setTimeout(() => {
-          Cookies.set("token", res.data.token, { expires: 7 });
-          dispatch(setGlobalCookie(res.data.token));
           navigate("/get-pet/dashboard");
+          setIsLoading(false); // Stop loading after navigation
         }, 1000);
-        setLogin(true);
       }
     } catch (error: any) {
       console.error(
         "Error during user login:",
         error.response || error.message
       );
+      setIsLoading(false); // Stop loading on error
     }
   };
-
-  console.log(userData);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -79,6 +79,14 @@ const Login: React.FC = () => {
     const data: LoginData = { phoneNumber, password };
     loginUser(data);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader /> {/* Show loader while processing */}
+      </div>
+    );
+  }
 
   return (
     <div>

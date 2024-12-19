@@ -11,27 +11,37 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import formatDate from "../../utils/formatDate.js";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter.js";
+import Loader from "@/components/Loader/Loader.tsx";
 
 export default function Profile() {
-  const { name, profileImg, userId } = useSelector((state: any) => state.user);
+  const {
+    name = "User",
+    profileImg = "",
+    userId = "",
+  } = useSelector((state: any) => state.user);
   const [userPersonalData, setUserPersonalData] = useState(null);
+  const [favoritePets, setFavoritePets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchPersonalData = async () => {
     try {
       const res = await axios.get(`http://localhost:3000/users/${userId}`);
-
-      if (res) {
-        console.log(res);
-        setUserPersonalData(res.data);
+      if (res?.data) {
+        setUserPersonalData(res?.data);
+        setFavoritePets(res?.data?.likedPets || []);
       }
     } catch (error) {
-      console.error("error occurred durning fetching personal data: ", error);
+      console.error("Error fetching personal data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPersonalData();
-  }, []);
+    if (userId) fetchPersonalData();
+  }, [userId]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-[1em] absolute top-[5em] left-0 p-[1em] text-black">
@@ -42,8 +52,8 @@ export default function Profile() {
           </Avatar>
         </div>
         <div className="flex flex-col">
-          <div>{capitalizeFirstLetter(name) || "User"}</div>
-          <div>Member since: {formatDate(userPersonalData?.createdAt)}</div>
+          <div>{capitalizeFirstLetter(name)}</div>
+          <div>Member Since: {formatDate(userPersonalData?.createdAt)}</div>
         </div>
       </div>
       <Tabs className="w-72 h-[300px]" defaultValue="pets">
@@ -53,7 +63,7 @@ export default function Profile() {
         </TabsList>
 
         <TabsContent value="pets">
-          <AnimalTable />
+          <AnimalTable favoritePets={favoritePets} />
         </TabsContent>
         <TabsContent value="dog-sitters">
           Change your password here.
