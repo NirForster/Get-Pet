@@ -3,7 +3,6 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { duration, btnStyle } from "../../utils/helpers.js";
-import GoogleBtn from "@/components/GoogleBtn/GoogleBtn";
 import AppleBtn from "@/components/AppleBtn/AppleBtn";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -16,6 +15,7 @@ import {
   setUser,
   setUserId,
 } from "../../store/slices/userSlice";
+import { GoogleLogin } from "@react-oauth/google";
 
 interface LoginData {
   phoneNumber: string;
@@ -124,7 +124,6 @@ const Login: React.FC = () => {
           <hr className="flex-grow" />
         </div>
         <div className="flex w-full flex-row items-center gap-[0.5em]">
-          <GoogleBtn />
           <AppleBtn />
         </div>
       </form>
