@@ -188,41 +188,41 @@ const usersController = {
   },
 
   // Add a pet to the user’s likedPets array
-  // Add a pet to the user’s likedPets array
   likePet: async (req, res) => {
     try {
-      const { id } = req.params; // user ID
-      const { petId } = req.body; // pet ID to like
+      const { id: userId } = req.params; // Get userId from route parameters
+      const { petId } = req.body; // Get petId from request body
 
-      const user = await User.findById(id);
-      if (!user) return res.status(404).json({ message: "User not found" });
-
-      // Check if pet exists
+      // Check if the pet exists
       const pet = await Pet.findById(petId);
-      if (!pet) return res.status(404).json({ message: "Pet not found" });
-
-      // Check if pet already liked
-      if (user.likedPets.includes(petId)) {
-        return res.status(400).json({ message: "Pet already liked" });
+      if (!pet) {
+        return res.status(404).json({ message: "Pet not found" });
       }
 
-      // Add pet to likedPets array
-      user.likedPets.push(petId);
-      await user.save();
+      // Update the user's likedPets
+      const user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $addToSet: {
+            likedPets: {
+              petId,
+              status: "pending", // Default status when liking a pet
+            },
+          },
+        },
+        { new: true }
+      );
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
 
-      // Populate likedPets and return the updated list
-      const updatedUser = await User.findById(id).populate({
-        path: "likedPets",
-        select: "-__v -createdAt -updatedAt", // Exclude unwanted fields
-      });
-
-      res.status(200).json({
+      res.status(201).json({
         message: "Pet liked successfully",
-        likedPets: updatedUser.likedPets,
+        likedPet: { petId, status: "pending" },
+        user,
       });
     } catch (error) {
-      console.error("Error liking pet:", error);
-      res.status(400).json({ error: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
 
