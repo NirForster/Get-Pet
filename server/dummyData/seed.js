@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
 
-const AdoptionRequest = require("../models/adoptionRequestModel");
 const Pet = require("../models/petModel");
 const User = require("../models/userModel");
 
@@ -80,7 +79,7 @@ const seedDatabase = async () => {
       }
 
       // Convert unique phone numbers to user objects
-      for (const phoneNumber of phoneNumbers) {
+      phoneNumbers.forEach((phoneNumber) => {
         users.push({
           profilePicture: faker.image.avatar(),
           name: faker.person.fullName(),
@@ -90,7 +89,7 @@ const seedDatabase = async () => {
           likedPets: [],
           savedSitters: [],
         });
-      }
+      });
 
       await User.insertMany(users);
       console.log("Users collection seeded.");
@@ -145,33 +144,8 @@ const seedDatabase = async () => {
 
     await Pet.insertMany(pets);
     console.log("Pets collection seeded.");
-
-    // Check and seed Adoption Requests
-    const adoptionRequestCount = await AdoptionRequest.countDocuments();
-    if (adoptionRequestCount === 0) {
-      const insertedUsers = await User.find();
-      const insertedPets = await Pet.find();
-      const adoptionRequests = [];
-      for (let i = 0; i < 50; i++) {
-        adoptionRequests.push({
-          adopterId: faker.helpers.arrayElement(insertedUsers)._id,
-          petId: faker.helpers.arrayElement(insertedPets)._id,
-          status: faker.helpers.arrayElement([
-            "pending",
-            "approved",
-            "rejected",
-          ]),
-        });
-      }
-      await AdoptionRequest.insertMany(adoptionRequests);
-      console.log("AdoptionRequests collection seeded.");
-    } else {
-      console.log("AdoptionRequests collection already populated.");
-    }
-
-    console.log("Database seed operation complete!");
   } catch (error) {
-    console.error("Error during database seeding:", error);
+    console.error("Error seeding the database:", error);
   }
 };
 
