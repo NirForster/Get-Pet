@@ -46,7 +46,7 @@ const Register: React.FC = () => {
         dispatch(setUser(user.name));
         dispatch(setProfilePicUser(user.profilePicture));
         dispatch(setRole(user.role));
-        dispatch(setUserId(user._id));
+        dispatch(setUserId(user.userId));
 
         console.log("User registered successfully:", res.data);
 
@@ -92,9 +92,9 @@ const Register: React.FC = () => {
     <div className="w-full">
       <div
         className={
-          register ?
-            "p-[0.5em] text-green-500 rounded-[0.5em] mb-[0.5em] text-center"
-          : "hidden"
+          register
+            ? "p-[0.5em] text-green-500 rounded-[0.5em] mb-[0.5em] text-center"
+            : "hidden"
         }
       >
         <p>Successfully registered!</p>
@@ -131,9 +131,11 @@ const Register: React.FC = () => {
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-3 top-1/2 transform -translate-y-1/2"
           >
-            {showPassword ?
+            {showPassword ? (
               <AiOutlineEyeInvisible size={20} />
-            : <AiOutlineEye size={20} />}
+            ) : (
+              <AiOutlineEye size={20} />
+            )}
           </button>
         </div>
         <div className="flex flex-row flex-wrap items-center gap-[0.2em]">

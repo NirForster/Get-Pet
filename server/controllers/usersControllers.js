@@ -28,7 +28,9 @@ const usersController = {
           existingUser.password
         );
         if (!isValidPassword) {
-          return res.status(401).send({ message: "Invalid credentials" });
+          return res
+            .status(401)
+            .send({ message: "Invalid credentials or password incorrect" });
         }
 
         const token = await generateToken({
@@ -39,6 +41,7 @@ const usersController = {
           message: "Login successful!",
           token: token,
           user: {
+            userId: existingUser._id,
             name: existingUser.name,
             profilePicture: existingUser.profilePicture,
             role: existingUser.role,
@@ -58,6 +61,7 @@ const usersController = {
       console.log(token);
 
       const userResponse = {
+        userId: newUser._id,
         name: newUser.name,
         profilePicture: newUser.profilePicture,
         role: newUser.role,
@@ -193,14 +197,12 @@ const usersController = {
   },
 
   // Get the user’s liked pets
-  // Assumes likedPets is an array of Pet _id references
   getLikedPets: async (req, res) => {
     try {
       const { id } = req.params;
 
-      // Find the user and populate the likedPets field
       const user = await User.findById(id).populate({
-        path: "likedPets",
+        path: "likedPets.petId",
         select: "-__v -createdAt -updatedAt", // Exclude unwanted fields
       });
 
@@ -216,7 +218,6 @@ const usersController = {
   },
 
   // Get the user’s saved sitters
-  // Assumes savedSitters is an array of User _id references
   // These users should have role = "sitter"
   getSavedUsers: async (req, res) => {
     try {
