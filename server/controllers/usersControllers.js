@@ -1,9 +1,13 @@
 const User = require("../models/userModel");
 const Pet = require("../models/petModel");
-const { makeHashedPassword, generateToken } = require("../auth/auth.js");
+const {
+  makeHashedPassword,
+  generateToken,
+  comparePassword,
+} = require("../auth/auth.js");
 
 const usersController = {
-  //  Add a user (Sign up)
+  // Add a user (Sign up)
   addUser: async (req, res) => {
     try {
       const { name, phoneNumber, password } = req.body;
@@ -15,9 +19,36 @@ const usersController = {
           .send({ message: "Bad request. Missing fields." });
       }
 
-      // If you want to hash the password before saving:
+      // Check if user already exists
+      const existingUser = await User.findOne({ phoneNumber });
+      if (existingUser) {
+        // If user exists, perform login logic
+        const isValidPassword = await comparePassword(
+          password,
+          existingUser.password
+        );
+        if (!isValidPassword) {
+          return res.status(401).send({ message: "Invalid credentials" });
+        }
+
+        const token = await generateToken({
+          userId: existingUser._id,
+          user: existingUser,
+        });
+        return res.status(200).json({
+          message: "Login successful!",
+          token: token,
+          user: {
+            name: existingUser.name,
+            profilePicture: existingUser.profilePicture,
+            role: existingUser.role,
+          },
+        });
+      }
+
+      // If user does not exist, create a new one
       const hashedPassword = await makeHashedPassword(password);
-      let newUser = await User.create({
+      const newUser = await User.create({
         name,
         phoneNumber,
         password: hashedPassword,
@@ -26,7 +57,6 @@ const usersController = {
       const token = await generateToken({ userId: newUser._id, newUser });
       console.log(token);
 
-      // Construct the response object with only the desired fields
       const userResponse = {
         name: newUser.name,
         profilePicture: newUser.profilePicture,
