@@ -26,7 +26,7 @@ const login = async (req, res) => {
       return res.status(401).send({ message: "Invalid credentials" });
     }
 
-    const token = await generateToken({ userId: user._id, role: user.role });
+    const token = await generateToken({ userId: user._id, user: user });
 
     return res.status(200).send({ token, user });
   } catch (error) {

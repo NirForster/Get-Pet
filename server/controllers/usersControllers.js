@@ -23,7 +23,7 @@ const usersController = {
         password: hashedPassword,
       });
 
-      const token = await generateToken({ phoneNumber });
+      const token = await generateToken({ userId: newUser._id, newUser });
       console.log(token);
 
       // Construct the response object with only the desired fields
